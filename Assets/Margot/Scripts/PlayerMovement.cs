@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 namespace Margot
 {
-    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerMovement : MonoBehaviour
     {
         [Header("Movement")]
@@ -12,36 +12,28 @@ namespace Margot
         [SerializeField] private float decel = 25f;
 
         [Header("Axis/Visual")]
-        [SerializeField] private bool lockToWorldX = true;
+        [SerializeField] private bool lockToWorldY = true; // 2D에서는 Y축 고정 여부로 바꿔줌
         [SerializeField] private Transform visual;
 
-        private Rigidbody rb;
-        private float startZ;
+        private Rigidbody2D rb;
         private Quaternion faceRight, faceLeft;
 
-        // New Input System �Է°� ����
-        private Vector2 moveInput; // OnMove()���� ������Ʈ��
-        private int dir;           // ��/�� ���� (-1,0,1)
+        private Vector2 moveInput;
+        private int dir;
 
         private void Awake()
         {
-            rb = GetComponent<Rigidbody>();
-            rb.useGravity = true;
+            rb = GetComponent<Rigidbody2D>();
+            rb.gravityScale = 1f; // 2D에서는 useGravity 대신 gravityScale
 
-            // ȸ�� ���� + Z�� ����
-            rb.constraints = RigidbodyConstraints.FreezeRotationX
-                           | RigidbodyConstraints.FreezeRotationY
-                           | RigidbodyConstraints.FreezeRotationZ;
-            if (lockToWorldX)
-                rb.constraints |= RigidbodyConstraints.FreezePositionZ;
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            if (lockToWorldY)
+                rb.constraints |= RigidbodyConstraints2D.FreezePositionY;
 
-            startZ = transform.position.z;
-
-            faceRight = Quaternion.Euler(0f, 90f, 0f);
-            faceLeft = Quaternion.Euler(0f, -90f, 0f);
+            faceRight = Quaternion.Euler(0f, 0f, 0f);
+            faceLeft = Quaternion.Euler(0f, 180f, 0f);
         }
 
-        // PlayerInput ������Ʈ�� ȣ�� (Move �׼ǿ� ���ε���)
         public void OnMove(InputAction.CallbackContext context)
         {
             moveInput = context.ReadValue<Vector2>();
@@ -53,19 +45,12 @@ namespace Margot
 
         private void FixedUpdate()
         {
-            // ��ǥ �ӵ�
             float targetVx = dir * maxSpeed;
             float rate = (dir != 0) ? accel : decel;
             float newVx = Mathf.MoveTowards(rb.linearVelocity.x, targetVx, rate * Time.fixedDeltaTime);
 
-            float vz = lockToWorldX ? 0f : rb.linearVelocity.z;
-            rb.linearVelocity = new Vector3(newVx, rb.linearVelocity.y, vz);
+            rb.linearVelocity = new Vector2(newVx, rb.linearVelocity.y);
 
-            // Z�� ����
-            if (lockToWorldX && Mathf.Abs(transform.position.z - startZ) > 0.001f)
-                rb.position = new Vector3(rb.position.x, rb.position.y, startZ);
-
-            // �ð� �� ȸ��
             if (visual != null && dir != 0)
                 visual.rotation = (dir > 0) ? faceRight : faceLeft;
         }
