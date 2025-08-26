@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9b9828b2f837074439de499fa378d493
+guid: dc58b08a39555c945b16335e87212253
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -21,7 +21,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 0
+  isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: gun_0
+      name: player_0
       rect:
         serializedVersion: 2
-        x: 124
-        y: 104
-        width: 183
-        height: 128
+        x: 117
+        y: 101
+        width: 197
+        height: 195
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,8 +125,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 16945c56cbb11cc49ab59ec3231702af
-      internalID: -2108314858
+      spriteID: 54a488733c46da4478f754627e03a912
+      internalID: -1938151714
       vertices: []
       indices: 
       edges: []
@@ -145,7 +145,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      gun_0: -2108314858
+      player_0: -1938151714
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
