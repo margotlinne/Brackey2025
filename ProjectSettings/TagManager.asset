@@ -4,8 +4,8 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - Bullet
   - Wall
+  - Bullet
   layers:
   - Default
   - TransparentFX
