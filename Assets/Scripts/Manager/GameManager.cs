@@ -5,8 +5,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    [Header("Managers")]
     public UIManager uiManager;
     public PoolManager poolManager;
+    public WaveManager waveManager;
 
     void Awake()
     {

@@ -1,20 +1,37 @@
 using UnityEngine;
 
-public class BulletPool : MonoBehaviour
-{
-    public GameObject bulletPrefab;
-
-    void Start()
+namespace Margot {
+    public class BulletPool : MonoBehaviour
     {
-        GameManager.Instance.poolManager.InitiatePool(bulletPrefab, 50, "Bullet");
-    }
+        public enum BulletType { e_bullet, p_bullet }
+
+        public GameObject player_bulletPrefab;
+        public GameObject enemy_bulletPrefab;
+
+        void Start()
+        {
+            GameManager.Instance.poolManager.InitiatePool(player_bulletPrefab, 100, "PlayerBullet");
+            GameManager.Instance.poolManager.InitiatePool(enemy_bulletPrefab, 100, "EnemyBullet");
+        }
 
 
-    public GameObject GetBulletFromPool()
-    {
-        GameObject bullet = GameManager.Instance.poolManager.TakeFromPool("Bullet");
-        bullet.transform.SetPositionAndRotation(this.transform.position, this.transform.rotation);
+        public GameObject GetBulletFromPool(BulletType type, Transform spawnPoint)
+        {
+            GameObject bullet = null;
 
-        return bullet;
+            if (type == BulletType.e_bullet)
+            {
+                Debug.Log("[BulletPool] get enemy bullet from pool");
+                bullet = GameManager.Instance.poolManager.TakeFromPool("EnemyBullet");
+            }
+            else if (type == BulletType.p_bullet)
+            {
+                Debug.Log("[BulletPool] get player bullet from pool");
+                bullet = GameManager.Instance.poolManager.TakeFromPool("PlayerBullet");
+            }
+
+            bullet.transform.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
+            return bullet;
+        }
     }
 }

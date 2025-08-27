@@ -9,6 +9,7 @@ namespace Margot
         public Transform pools;
         public Dictionary<string, List<GameObject>> poolLists = new Dictionary<string, List<GameObject>>();
 
+        public BulletPool bulletPool;
 
         public void InitiatePool(GameObject prefab, int amount, string name)
         {
