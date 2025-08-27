@@ -14,7 +14,7 @@ namespace Margot
 
         void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.CompareTag("Boundary"))
+            if (collision.CompareTag("Wall"))
             {
                 Debug.Log("[BulletBehaviour] bullet collided with boundary");
                 // add particle or other effect here
