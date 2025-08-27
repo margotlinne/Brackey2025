@@ -6,6 +6,7 @@ namespace Margot
     public class BulletBehaviour : MonoBehaviour
     {
         Rigidbody2D rb;
+        
 
         void Awake()
         {
