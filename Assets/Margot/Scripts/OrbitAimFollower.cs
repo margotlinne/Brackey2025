@@ -46,6 +46,7 @@ namespace Margot
         {
             var parent = transform.parent;
             if (cam == null || parent == null) return;
+            if (GameManager.Instance.uiManager.rouletteCanvas.activeSelf) return;
 
             // 1) Convert screen pointer to world space
             Vector3 parentWorld = parent.position;

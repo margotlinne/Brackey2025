@@ -1,12 +1,13 @@
+using NUnit.Framework;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace Margot
 {
     public class EnemySpawner : MonoBehaviour
     {
         public GameObject[] enemyPrefabs;
-
-
+        public List<GameObject> spawnedEnemies = new List<GameObject>();
 
         private void Start()
         {
@@ -16,13 +17,25 @@ namespace Margot
             }
         }
 
-
         public void SpawnEnemies()
         {
             GameObject enemy = GameManager.Instance.poolManager.TakeFromPool("ChaseEnemy");
             enemy.SetActive(true);
             enemy.GetComponent<Enemy>().UpdateStat();
             enemy.transform.position = Vector3.zero;
+            spawnedEnemies.Add(enemy);
+            enemy.GetComponent<Enemy>().OnDeath += RemovedEnemyFromSpawnList;
+        }
+
+        public void RemovedEnemyFromSpawnList(GameObject enemy)
+        {
+            spawnedEnemies.Remove(enemy);   
+
+            if (spawnedEnemies.Count <= 0)
+            {
+                spawnedEnemies.Clear();
+                GameManager.Instance.waveManager.WaveEnd();
+            }
         }
     }
 }

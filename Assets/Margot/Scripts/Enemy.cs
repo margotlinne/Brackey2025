@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -21,6 +23,8 @@ namespace Margot
 
         [Header("Stat")]
         [SerializeField] protected EnemyStats thisEnemyStat = null;
+
+        public event Action<GameObject> OnDeath;
 
         protected virtual void Awake()
         {
@@ -88,6 +92,8 @@ namespace Margot
             // ! add dying animation or something here
             GameManager.Instance.poolManager.ReturnToPool(enemyType.ToString() + "Enemy", this.gameObject);
             GameManager.Instance.waveManager.spawnedEnemyCount--;
+
+            OnDeath?.Invoke(this.gameObject);
         }
 
         public void GettingHit()
