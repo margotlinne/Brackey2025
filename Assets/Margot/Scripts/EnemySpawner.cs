@@ -7,6 +7,7 @@ namespace Margot
     public class EnemySpawner : MonoBehaviour
     {
         public GameObject[] enemyPrefabs;
+
         public List<GameObject> spawnedEnemies = new List<GameObject>();
 
         private void Start()

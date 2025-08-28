@@ -1,4 +1,5 @@
 using Margot;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -21,5 +22,19 @@ public class GameManager : MonoBehaviour
         // hide mouse cursor
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    void Update()
+    {
+        if (uiManager.rouletteCanvas.activeSelf)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Confined;
+        }
     }
 }

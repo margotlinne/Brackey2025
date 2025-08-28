@@ -5,18 +5,18 @@ namespace Margot
 {
     public class WaveManager : MonoBehaviour
     {
-        public int spawnedEnemyCount = 0;
         public int currentWave;
         public bool isWaveDone = true;
 
         public EnemySpawner enemySpawner;
         public WaveCountDown waveCountdown;
+        public WaveDirector waveDirector; 
         
         Coroutine enemySpawnCoroutine;
 
         void Start()
         {
-            currentWave = 1;
+            currentWave = 0;
         }
 
 
@@ -39,7 +39,7 @@ namespace Margot
 
         IEnumerator OpenRouletteCanvas()
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
 
             GameManager.Instance.uiManager.CloseCanvas(UIManager.CanvasType.roulette);
             waveCountdown.StartAnimation();
@@ -55,24 +55,7 @@ namespace Margot
         {
             Debug.Log("[WaveManager] start new wave");
             currentWave++;
-
-            if (enemySpawnCoroutine == null) StartCoroutine(SpawnEnemyThroughoutWave());
-        }
-
-
-        IEnumerator SpawnEnemyThroughoutWave()
-        {
-            do
-            {
-                Debug.Log("[WaveManager] spawn coroutine");
-                enemySpawner.SpawnEnemies();
-                spawnedEnemyCount++;
-                yield return null;
-
-            } while (spawnedEnemyCount > 0 && spawnedEnemyCount < 5);
-
-            enemySpawnCoroutine = null;
-            yield break;
+            waveDirector.Begin(currentWave);
         }
 
         public void WaveEnd()

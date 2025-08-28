@@ -1,7 +1,5 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace Margot
 {
@@ -24,6 +22,9 @@ namespace Margot
         [Header("Stat")]
         [SerializeField] protected EnemyStats thisEnemyStat = null;
 
+        //[Header("Drop Items")]
+
+
         public event Action<GameObject> OnDeath;
 
         protected virtual void Awake()
@@ -45,6 +46,15 @@ namespace Margot
                 else Debug.LogError("[Enemy] There is no player in the scene!");
             }
            
+        }
+
+        void OnEnable()
+        {
+            canAttack = true;
+        }
+        void OnDisable()
+        {
+            canAttack = false;
         }
 
         public void UpdateStat()
@@ -91,9 +101,10 @@ namespace Margot
             currentHealth = maxHealth;
             // ! add dying animation or something here
             GameManager.Instance.poolManager.ReturnToPool(enemyType.ToString() + "Enemy", this.gameObject);
-            GameManager.Instance.waveManager.spawnedEnemyCount--;
 
             OnDeath?.Invoke(this.gameObject);
+
+            DropItem();
         }
 
         public void GettingHit()
@@ -103,6 +114,11 @@ namespace Margot
 
             if (currentHealth <= 0f) Dead();
 
+        }
+
+        public void DropItem()
+        {
+           
         }
     }
 

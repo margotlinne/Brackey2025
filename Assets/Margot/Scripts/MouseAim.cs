@@ -31,14 +31,7 @@ namespace Margot
         private void LateUpdate()
         {
             if (canvasRect == null || cam == null) return;
-            if (GameManager.Instance.uiManager.rouletteCanvas.activeSelf)
-            {
-                rectTransform.gameObject.SetActive(false);
-                return;
-            }
-
-            if (!rectTransform.gameObject.activeSelf)
-                rectTransform.gameObject.SetActive(true);
+            if (GameManager.Instance.uiManager.rouletteCanvas.activeSelf) return;
 
             // get screen point (from input or fallback to Mouse.current)
             Vector2 sp = hasPointer
