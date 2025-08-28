@@ -6,19 +6,21 @@ namespace Margot
     public class Enemy : MonoBehaviour
     {
         public enum EnemyType { Chase, Run, Shoot };
-        public static System.Action<Enemy.EnemyType> OnAnyEnemyReturned; 
 
         [Header("Info")]
-        public float maxHealth = 10f;
-        public float currentHealth = 0f;
         public EnemyType enemyType;
-        public float speed = 3f;
+        public float currentHealth = 0f;
         public bool canAttack = false;
+        [SerializeField] protected float maxHealth;
+        [SerializeField] protected float moveSpeed;
+        protected Rigidbody2D rb = null;
+        public float attackDamage = 3f;
 
         [Header("Player")]
         protected Transform player = null;
 
-        protected Rigidbody2D rb = null;
+        [Header("Stat")]
+        [SerializeField] protected EnemyStats thisEnemyStat = null;
 
         protected virtual void Awake()
         {
@@ -39,6 +41,35 @@ namespace Margot
                 else Debug.LogError("[Enemy] There is no player in the scene!");
             }
            
+        }
+
+        public void UpdateStat()
+        {
+            Debug.Log("[Enemy] Update enemy stat");
+            switch (enemyType)
+            {
+                case EnemyType.Chase:
+                    thisEnemyStat = GameManager.Instance.statManager.chasingEnemyStat;
+                    moveSpeed = thisEnemyStat.moveSpeed;
+                    maxHealth = thisEnemyStat.maxHealth;
+                    attackDamage = thisEnemyStat.attackDamage;  
+                    break;
+                case EnemyType.Run:
+                    thisEnemyStat = GameManager.Instance.statManager.runningEnemyStat;
+                    moveSpeed = thisEnemyStat.moveSpeed;
+                    maxHealth = thisEnemyStat.maxHealth;
+                    attackDamage = thisEnemyStat.attackDamage;
+                    break;
+                case EnemyType.Shoot:
+                    thisEnemyStat = GameManager.Instance.statManager.shootingEnemyStat;
+                    moveSpeed = thisEnemyStat.moveSpeed;
+                    maxHealth = thisEnemyStat.maxHealth;
+                    attackDamage = thisEnemyStat.attackDamage;
+                    break;
+                default:
+                    Debug.LogError("[Enemy] Undefined enemy type!");
+                    break;
+            }
         }
 
         public virtual void OnTriggerEnter2D(Collider2D collision)
@@ -62,11 +93,10 @@ namespace Margot
         public void GettingHit()
         {
             Debug.Log("[Enemy] " + enemyType.ToString() + " type enemy got hit");
-            currentHealth -= player.gameObject.GetComponent<PlayerAttack>().damage;
+            currentHealth -= player.GetComponent<Player>().attackDamage;
 
             if (currentHealth <= 0f) Dead();
 
-            OnAnyEnemyReturned?.Invoke(enemyType); 
         }
     }
 

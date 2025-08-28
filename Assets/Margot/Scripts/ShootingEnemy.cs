@@ -20,11 +20,19 @@ namespace Margot
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.Euler(0, 0, angle);
 
-                if (Time.time >= nextFireTime)
+                // use stat-based attack interval
+                if (thisEnemyStat != null && thisEnemyStat.attackSpeedSPS.HasValue)
                 {
-                    GameObject bullet = GameManager.Instance.poolManager.bulletPool.GetBulletFromPool(BulletPool.BulletType.e_bullet, firePoint);
-                    bullet.GetComponent<Bullet>().Shoot(direction.normalized, bulletForce);
-                    nextFireTime = Time.time + fireRate;
+                    if (Time.time >= nextFireTime)
+                    {
+                        GameObject bullet = GameManager.Instance.poolManager.bulletPool
+                            .GetBulletFromPool(BulletPool.BulletType.e_bullet, firePoint);
+
+                        bullet.GetComponent<Bullet>().Shoot(direction.normalized, bulletForce);
+
+                        // nextFireTime = now + interval (ex: 0.5 sec if SPS=2)
+                        nextFireTime = Time.time + thisEnemyStat.AttackInterval;
+                    }
                 }
             }
     

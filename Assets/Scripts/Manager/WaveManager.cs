@@ -25,12 +25,13 @@ namespace Margot
             {
                 // roulette spinning...
 
-                NewWave();
+                NewWave(); // for debug, annotate this line when roulette system is implemented
             }
             isWaveDone = false;
 
         }
 
+        // call this when roulette spinning is done
         public void NewWave()
         {
             Debug.Log("[WaveManager] start new wave");

@@ -17,7 +17,7 @@ namespace Margot
         {
             if (canAttack)
             {
-                rb.linearVelocity = moveDirection * speed;
+                rb.linearVelocity = moveDirection * moveSpeed;
             }
         }
 

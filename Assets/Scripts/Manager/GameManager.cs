@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public UIManager uiManager;
     public PoolManager poolManager;
     public WaveManager waveManager;
+    public StatManager statManager;
 
     void Awake()
     {

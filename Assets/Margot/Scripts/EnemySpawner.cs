@@ -21,6 +21,7 @@ namespace Margot
         {
             GameObject enemy = GameManager.Instance.poolManager.TakeFromPool("ChaseEnemy");
             enemy.SetActive(true);
+            enemy.GetComponent<Enemy>().UpdateStat();
             enemy.transform.position = Vector3.zero;
         }
     }

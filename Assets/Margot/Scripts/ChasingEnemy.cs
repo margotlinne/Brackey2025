@@ -10,7 +10,7 @@ namespace Margot
             if (canAttack)
             {
                 Vector2 direction = (player.position - transform.position).normalized;
-                rb.linearVelocity = direction * speed;
+                rb.linearVelocity = direction * moveSpeed;
             }
                 
         }

@@ -1247,6 +1247,7 @@ MonoBehaviour:
   uiManager: {fileID: 349143801}
   poolManager: {fileID: 1567361853}
   waveManager: {fileID: 418588294}
+  statManager: {fileID: 2097648969}
 --- !u!1 &1165324696
 GameObject:
   m_ObjectHideFlags: 0
@@ -1262,6 +1263,7 @@ GameObject:
   - component: {fileID: 1165324707}
   - component: {fileID: 1165324706}
   - component: {fileID: 1165324708}
+  - component: {fileID: 1165324709}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1509,9 +1511,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20976eea955a8d84d80fe3f25deb17e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 5
-  accel: 6
-  decel: 4
   visual: {fileID: 0}
 --- !u!61 &1165324707
 BoxCollider2D:
@@ -1571,10 +1570,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03ffea71b9e7672478edce535ad61e24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 0.5
   firePoint: {fileID: 888536317}
   bulletForce: 50
-  damage: 5
+--- !u!114 &1165324709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165324696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cfd916b7d6f09340840a43e3c14f989, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 30
+  currentHealth: 10
+  moveSpeed: 6
+  rb: {fileID: 0}
+  attackDamage: 5
 --- !u!1 &1266380536
 GameObject:
   m_ObjectHideFlags: 0
@@ -2649,6 +2663,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1963244962}
   m_CullTransparentMesh: 1
+--- !u!1 &2097648968
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2097648970}
+  - component: {fileID: 2097648969}
+  m_Layer: 0
+  m_Name: StatManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2097648969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2097648968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a2b80eea8eee904cb949c7307821a52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chasingEnemyStat:
+    attackDamage: 10
+    moveSpeed: 5
+    maxHealth: 100
+  runningEnemyStat:
+    attackDamage: 10
+    moveSpeed: 5
+    maxHealth: 100
+  shootingEnemyStat:
+    attackDamage: 10
+    moveSpeed: 5
+    maxHealth: 100
+  playerStat:
+    attackDamage: 5
+    moveSpeed: 5
+    maxHealth: 30
+  player: {fileID: 1165324709}
+--- !u!4 &2097648970
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2097648968}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.70518, y: -0.77997, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2111166378
 GameObject:
   m_ObjectHideFlags: 0
@@ -2693,11 +2768,12 @@ SceneRoots:
   - {fileID: 1705853250}
   - {fileID: 1266380539}
   - {fileID: 276614979}
-  - {fileID: 426587963}
   - {fileID: 1121965133}
+  - {fileID: 426587963}
   - {fileID: 418588295}
   - {fileID: 349143802}
   - {fileID: 1567361854}
+  - {fileID: 2097648970}
   - {fileID: 1906469677}
   - {fileID: 397491943}
   - {fileID: 988832098}

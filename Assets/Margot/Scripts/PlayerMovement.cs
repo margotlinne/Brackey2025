@@ -6,23 +6,22 @@ namespace Margot
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerMovement : MonoBehaviour
     {
-        [Header("Movement")]
-        [SerializeField] private float maxSpeed = 6f;
-        [SerializeField] private float accel = 20f;   
-        [SerializeField] private float decel = 25f;   
-
         [Header("Visual")]
-        [SerializeField] private Transform visual;    
+        [SerializeField] private Transform visual;
 
-        private Rigidbody2D rb;
-        private Vector2 moveInput;     
+        private Vector2 moveInput;
         private Vector2 lastDir = Vector2.right;
+
+        Player player;
+
 
         private void Awake()
         {
-            rb = GetComponent<Rigidbody2D>();
-            rb.gravityScale = 0f; 
-            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            player = GetComponent<Player>();
+
+            player.rb = GetComponent<Rigidbody2D>();
+            player.rb.gravityScale = 0f;
+            player.rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
 
         public void OnMove(InputAction.CallbackContext context)
@@ -35,19 +34,11 @@ namespace Margot
 
         private void FixedUpdate()
         {
-            Vector2 targetVel = moveInput * maxSpeed;
+            // set velocity directly
+            player.rb.linearVelocity = moveInput * player.moveSpeed;
 
-            Vector2 cur = rb.linearVelocity;
-
-            float ax = Mathf.Approximately(moveInput.x, 0f) ? decel : accel;
-            float ay = Mathf.Approximately(moveInput.y, 0f) ? decel : accel;
-
-            float newVx = Mathf.MoveTowards(cur.x, targetVel.x, ax * Time.fixedDeltaTime);
-            float newVy = Mathf.MoveTowards(cur.y, targetVel.y, ay * Time.fixedDeltaTime);
-
-            rb.linearVelocity = new Vector2(newVx, newVy);
-
-            Vector2 vel = rb.linearVelocity;
+            // update facing direction
+            Vector2 vel = player.rb.linearVelocity;
             if (vel.sqrMagnitude > 0.0001f)
                 lastDir = vel.normalized;
 
