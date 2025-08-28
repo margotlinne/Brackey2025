@@ -1,16 +1,16 @@
+using TMPro;
 using UnityEngine;
 
-public class UIManager : MonoBehaviour
+namespace Margot
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class UIManager : MonoBehaviour
     {
-        
+        public TextMeshProUGUI waveText;
+
+        void Update()
+        {
+            waveText.text = "Wave " + GameManager.Instance.waveManager.currentWave.ToString();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
