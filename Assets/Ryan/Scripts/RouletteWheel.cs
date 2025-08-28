@@ -3,50 +3,88 @@ using UnityEngine.UI;
 
 public class RouletteWheel : MonoBehaviour
 {
-    public Button[] slots;       // Assign 4 buttons in Inspector
-    public Sprite[] abilityIcons; // 9 ability icons to pick from
-    public Image[] slotImages;    // The Image component on each slot button
+    [Header("Slot Buttons (4)")]
+    public Button[] slotButtons; // Assign your 4 slot buttons
 
-    private int selectedAbilityIndex = -1; // -1 means no ability selected
+    [Header("Ability Buttons (9)")]
+    public Button[] abilityButtons; // Assign your 9 ability buttons
+
+    private int[] slotToAbility; // tracks which ability is in each slot (-1 if empty)
 
     private void Start()
     {
-        // Assign click listeners to slots
-        for (int i = 0; i < slots.Length; i++)
+        slotToAbility = new int[slotButtons.Length];
+
+        // Hook up ability button clicks
+        for (int i = 0; i < abilityButtons.Length; i++)
+        {
+            int index = i; // capture loop variable
+            abilityButtons[i].onClick.AddListener(() => OnAbilityClicked(index));
+        }
+
+        // Hook up slot button clicks (reset slot)
+        for (int i = 0; i < slotButtons.Length; i++)
         {
             int index = i;
-            slots[i].onClick.AddListener(() => OnSlotClick(index));
+            slotButtons[i].onClick.AddListener(() => OnSlotClicked(index));
         }
+
+        ResetSlots();
     }
 
-    // Call this from your 9 ability buttons
-    public void SelectAbility(int abilityIndex)
+    private void OnAbilityClicked(int abilityIndex)
     {
-        selectedAbilityIndex = abilityIndex;
-        Debug.Log("Selected Ability: " + abilityIndex);
-    }
-
-    private void OnSlotClick(int slotIndex)
-    {
-        if (slotImages[slotIndex].sprite != null)
+        // Find the first empty slot
+        for (int i = 0; i < slotButtons.Length; i++)
         {
-            // Remove ability
-            slotImages[slotIndex].sprite = null;
-        }
-        else
-        {
-            // Add selected ability
-            if (selectedAbilityIndex != -1)
+            if (slotToAbility[i] == -1) // empty slot
             {
-                // Optional: Prevent duplicates
-                for (int i = 0; i < slotImages.Length; i++)
-                {
-                    if (i != slotIndex && slotImages[i].sprite == abilityIcons[selectedAbilityIndex])
-                        return;
-                }
+                // Get color from ability button
+                Color abilityColor = abilityButtons[abilityIndex].GetComponent<Image>().color;
 
-                slotImages[slotIndex].sprite = abilityIcons[selectedAbilityIndex];
+                // Assign it to the slot
+                slotButtons[i].GetComponent<Image>().color = abilityColor;
+
+                // Track which ability is here
+                slotToAbility[i] = abilityIndex;
+
+                // Disable the ability button (can’t be picked again)
+                abilityButtons[abilityIndex].interactable = false;
+
+                return; // stop after filling one slot
             }
+        }
+
+        Debug.Log("No empty slots available!");
+    }
+
+    private void OnSlotClicked(int slotIndex)
+    {
+        if (slotToAbility[slotIndex] != -1) // if a slot is filled
+        {
+            int abilityIndex = slotToAbility[slotIndex];
+
+            // Re-enable that ability button
+            abilityButtons[abilityIndex].interactable = true;
+
+            // Reset slot to empty
+            slotButtons[slotIndex].GetComponent<Image>().color = Color.white;
+            slotToAbility[slotIndex] = -1;
+        }
+    }
+
+    public void ResetSlots()
+    {
+        for (int i = 0; i < slotButtons.Length; i++)
+        {
+            slotButtons[i].GetComponent<Image>().color = Color.white;
+            slotToAbility[i] = -1;
+        }
+
+        // Re-enable all ability buttons
+        foreach (Button ability in abilityButtons)
+        {
+            ability.interactable = true;
         }
     }
 }
