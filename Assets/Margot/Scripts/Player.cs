@@ -1,4 +1,5 @@
 using UnityEngine;
+using static Margot.Enemy;
 
 namespace Margot
 {
@@ -6,7 +7,7 @@ namespace Margot
     {
         [Header("Info")]
         public float maxHealth = 30f;
-        public float currentHealth = 10f;
+        public float currentHealth = 30f;
 
         [Header("Movement")]
         public float moveSpeed = 6f; 
@@ -18,9 +19,17 @@ namespace Margot
         public float attackDamage = 5f;
         public int? bulletPerShot = 1;
 
+        // [Header("Health")]
+        
+
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
+        }
+
+        private void Start()
+        {
+            currentHealth = maxHealth;
         }
 
         public void UpdateStat()
@@ -34,7 +43,19 @@ namespace Margot
             bulletPerShot = GameManager.Instance.statManager.playerStat.bulletsPerShot;
         }
 
+        public void GettingHit(float damange)
+        {
+            Debug.Log("[Player] player got hit");
+            currentHealth -= damange;
 
+            if (currentHealth <= 0f) Dead();
+
+        }
+
+        public void Dead()
+        {
+
+        }
 
     }
 
