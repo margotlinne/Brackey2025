@@ -16,7 +16,7 @@ namespace Margot
 
         void Start()
         {
-            currentWave = 0;
+            currentWave = 1;
         }
 
 
@@ -24,7 +24,9 @@ namespace Margot
         {
             if (isWaveDone)
             {
+                GameManager.Instance.uiManager.gameTimer.PauseTimer();
                 GameManager.Instance.uiManager.OpenCanvas(UIManager.CanvasType.roulette);
+                currentWave++;
             }
             isWaveDone = false;
         }
@@ -34,16 +36,17 @@ namespace Margot
         /// </summary>
         public void NewWave()
         {
-            StartCoroutine(OpenRouletteCanvas());
+            StartCoroutine(CloseRouletteCanvas());
         }
 
-        IEnumerator OpenRouletteCanvas()
+        IEnumerator CloseRouletteCanvas()
         {
             yield return new WaitForSeconds(0.5f);
 
             GameManager.Instance.uiManager.CloseCanvas(UIManager.CanvasType.roulette);
-            waveCountdown.StartAnimation();
-
+            GameManager.Instance.uiManager.gameTimer.ResumeTimer();
+            // waveCountdown.StartAnimation();
+            StartWave(); // no countdown, straightly spawn enemies
             yield break;
         }
         
@@ -54,7 +57,6 @@ namespace Margot
         public void StartWave()
         {
             Debug.Log("[WaveManager] start new wave");
-            currentWave++;
             waveDirector.Begin(currentWave);
         }
 

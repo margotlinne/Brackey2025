@@ -18,14 +18,19 @@ namespace Margot
             if (collision.CompareTag("Wall"))
             {
                 Debug.Log("[BulletBehaviour] bullet collided with wall");
-                ReturnBullet(); 
-
+                ReturnBullet();
             }
+
         }
 
         protected virtual void OnCollisionEnter2D(Collision2D collision) { }
 
-        protected virtual void ReturnBullet() { }
+        protected virtual void ReturnBullet()
+        {
+            GameObject bulletParticle = GameManager.Instance.poolManager.TakeFromPool("BulletParticle");
+            bulletParticle.SetActive(true);
+            bulletParticle.transform.position = this.transform.position;
+        }
 
         public virtual void Shoot(Vector2 dir, float speed)
         {

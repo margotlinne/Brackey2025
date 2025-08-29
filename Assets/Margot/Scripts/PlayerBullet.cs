@@ -9,7 +9,7 @@ namespace Margot
         {
             base.OnTriggerEnter2D(collision);
 
-            if (collision.gameObject.layer == 6) // enemy layer
+            if (collision.gameObject.layer == 6 && collision.gameObject.GetComponent<Enemy>().canAttack) // enemy layer
             {
                 Debug.Log("[BulletBehaviour] player bullet collided with enemy");
                 ReturnBullet();

@@ -903,6 +903,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveText: {fileID: 231639002}
   rouletteCanvas: {fileID: 1938001014}
+  gameTimer: {fileID: 1677013569}
 --- !u!4 &349143802
 Transform:
   m_ObjectHideFlags: 0
@@ -1128,16 +1129,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawner: {fileID: 1326045459}
-  initialBurst: 5
-  flowPerTick: 2
-  baseInterval: 3
-  minInterval: 2.25
-  lerpToMinAtWave: 20
-  baseConcurrency: 10
-  concurrencyPerWave: 2
-  maxConcurrency: 50
-  baseBudget: 30
-  budgetGrowth: 1.2
+  startTotal: 12
+  totalGrowth: 1.2
+  minBatch: 3
+  maxBatch: 8
+  batchEveryNWaves: 2
 --- !u!4 &412339988
 Transform:
   m_ObjectHideFlags: 0
@@ -1502,6 +1498,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 580845043}
   m_CullTransparentMesh: 1
+--- !u!1 &613147574
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 613147575}
+  - component: {fileID: 613147576}
+  m_Layer: 0
+  m_Name: ParticleSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &613147575
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613147574}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &613147576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613147574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f544b7dd457aa7b4198cf6590a2cf0fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bloodParticlePrefab: {fileID: 7096011492951925027, guid: 314ffdfbe72b3174cae0c2e154d07357, type: 3}
+  bulletParticlePrefab: {fileID: 7096011492951925027, guid: 8774989264c267a4fafaa5c79ce370b3, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2331,7 +2373,7 @@ GameObject:
   m_Component:
   - component: {fileID: 988832098}
   m_Layer: 0
-  m_Name: Enemy--------------------------------------------------------------
+  m_Name: Spawner--------------------------------------------------------------
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3030,6 +3072,84 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1592488335}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1321161632
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1321161633}
+  - component: {fileID: 1321161634}
+  m_Layer: 0
+  m_Name: SpawnArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1321161633
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321161632}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1592488335}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1321161634
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321161632}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.7902006, y: 0.8176359}
+  m_EdgeRadius: 0
 --- !u!1 &1326045458
 GameObject:
   m_ObjectHideFlags: 0
@@ -3064,6 +3184,10 @@ MonoBehaviour:
   - {fileID: 4444727547812035601, guid: e2a0b03a0480e3241903dab17570f571, type: 3}
   - {fileID: 9109822917302711066, guid: 4cd4e0e3986ac4c47a0836c17de75655, type: 3}
   spawnedEnemies: []
+  spawnArea: {fileID: 1321161634}
+  targetTotalThisWave: 0
+  warmupSeconds: 2
+  warmupAlphaFactor: 0.5
 --- !u!4 &1326045460
 Transform:
   m_ObjectHideFlags: 0
@@ -3418,7 +3542,7 @@ Transform:
   m_GameObject: {fileID: 1592488333}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3426,6 +3550,7 @@ Transform:
   - {fileID: 1294221315}
   - {fileID: 392524303}
   - {fileID: 1678501260}
+  - {fileID: 1321161633}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1613795712
@@ -3783,6 +3908,7 @@ GameObject:
   - component: {fileID: 1677013566}
   - component: {fileID: 1677013568}
   - component: {fileID: 1677013567}
+  - component: {fileID: 1677013569}
   m_Layer: 0
   m_Name: TimerText
   m_TagString: Untagged
@@ -3908,6 +4034,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1677013565}
   m_CullTransparentMesh: 1
+--- !u!114 &1677013569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677013565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0d91dcc7071fb044aa8cf34af2865d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1678501257
 GameObject:
   m_ObjectHideFlags: 0
@@ -4629,6 +4767,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1963244962}
   m_CullTransparentMesh: 1
+--- !u!1 &1973362470
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1973362471}
+  m_Layer: 0
+  m_Name: Wave------------------------------------------------------------------
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1973362471
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973362470}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.70023, y: -23.8883, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1991928957
 GameObject:
   m_ObjectHideFlags: 0
@@ -4939,7 +5108,6 @@ SceneRoots:
   - {fileID: 963194228}
   - {fileID: 705507995}
   - {fileID: 2111166379}
-  - {fileID: 412339988}
   - {fileID: 1592488335}
   - {fileID: 1165324702}
   - {fileID: 1410726241}
@@ -4957,3 +5125,6 @@ SceneRoots:
   - {fileID: 397491943}
   - {fileID: 988832098}
   - {fileID: 1326045460}
+  - {fileID: 613147575}
+  - {fileID: 1973362471}
+  - {fileID: 412339988}

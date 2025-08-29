@@ -5,10 +5,10 @@ namespace Margot
 {
     public class RunningEnemy : Enemy
     {
-        private Vector2 moveDirection;
-        private bool isDizzy = false;   // 헤롱 상태 플래그
+        [SerializeField] private Vector2 moveDirection;
+        [SerializeField] private bool isDizzy = false;  
 
-        [SerializeField] private float dizzyTime = 1f; // 멈추는 시간
+        [SerializeField] private float dizzyTime = 1f; 
 
         protected override void Start()
         {
@@ -24,7 +24,7 @@ namespace Margot
             }
             else
             {
-                rb.linearVelocity = Vector2.zero; // 멈춤
+                rb.linearVelocity = Vector2.zero; 
             }
         }
 
@@ -44,15 +44,22 @@ namespace Margot
                 Vector2 normal = collision.contacts[0].normal;
                 moveDirection = Vector2.Reflect(moveDirection, normal).normalized;
 
-                // 헤롱 상태 코루틴 시작
-                StartCoroutine(DizzyCoroutine());
+                if (gameObject.activeInHierarchy)
+                {
+                    StartCoroutine(DizzyCoroutine());
+                }
             }
         }
 
         private IEnumerator DizzyCoroutine()
         {
             isDizzy = true;
-            yield return new WaitForSeconds(dizzyTime); // 1초 기다림
+            yield return new WaitForSeconds(dizzyTime); 
+            isDizzy = false;
+        }
+
+        void OnDisable()
+        {
             isDizzy = false;
         }
     }

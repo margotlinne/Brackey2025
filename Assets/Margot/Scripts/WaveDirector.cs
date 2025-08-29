@@ -3,158 +3,139 @@ using UnityEngine;
 
 namespace Margot
 {
+    [System.Serializable]
+    public struct WaveConfig
+    {
+        public int batchSize;   // enemies per batch
+        public int total;       // total enemies in this wave
+    }
+
     public class WaveDirector : MonoBehaviour
     {
         [Header("References")]
-        public EnemySpawner spawner;    // Uses EnemySpawner's list/removal callback
+        public EnemySpawner spawner;
 
-        [Header("Spawn Rules")]
-        public int initialBurst = 5;      // How many to spawn immediately at wave start
-        public int flowPerTick = 2;      // How many to enqueue per spawn interval
-        public float baseInterval = 3.00f;  // Initial interval between spawn ticks
-        public float minInterval = 2.25f;  // Minimum interval as waves progress
-        public int lerpToMinAtWave = 20;     // Wave number by which interval reaches minInterval
+        [Header("Procedural Wave Params")]
+        [Tooltip("Total of wave 1 (base).")]
+        public int startTotal = 12;
 
-        [Header("Concurrency (on-field cap)")]
-        public int baseConcurrency = 10;     // Max on-field enemies at wave 1
-        public int concurrencyPerWave = 2;      // +cap per wave
-        public int maxConcurrency = 50;     // Absolute cap
+        [Tooltip("Total growth multiplier per wave (e.g., 1.20 = +20% each wave).")]
+        public float totalGrowth = 1.20f;
 
-        [Header("Budget (total spawns per wave)")]
-        public int baseBudget = 30;         // Total spawns for wave 1
-        public float budgetGrowth = 1.20f;      // Growth factor per wave (e.g., ×1.20)
+        [Tooltip("Minimum batch size.")]
+        public int minBatch = 3;
 
-        // Optional: external notification (use only if you want Director to signal completion)
+        [Tooltip("Maximum batch size.")]
+        public int maxBatch = 8;
+
+        [Tooltip("Increase batch size by +1 every N waves (0 = disabled).")]
+        public int batchEveryNWaves = 2;
+
         public System.Action onWaveComplete;
 
         public bool running { get; private set; }
-
-        int wave;       // Current wave number
-        int queued;     // Pending spawns waiting to be flushed (respecting concurrency)
-        int budget;     // Remaining spawns for this wave
-        float interval; // Spawn interval for this wave
+        int waveIndex;                 // 0-based
         Coroutine co;
 
-        /// <summary>
-        /// Starts a new wave with the given number. Stops any previous run.
-        /// </summary>
+        /// <summary>Start a wave (1-based index). Stops any ongoing run.</summary>
         public void Begin(int waveNumber)
         {
-            wave = waveNumber;
+            waveIndex = Mathf.Max(0, waveNumber - 1);
             if (co != null) StopCoroutine(co);
-            co = StartCoroutine(Run());
+            co = StartCoroutine(RunWave(waveIndex));
         }
 
-        IEnumerator Run()
+        IEnumerator RunWave(int idx)
         {
             running = true;
 
-            // Compute per-wave caps and pacing
-            int concurrencyCap = Mathf.Min(baseConcurrency + concurrencyPerWave * (wave - 1), maxConcurrency);
-
-            float t = Mathf.Clamp01((wave - 1) / Mathf.Max(1f, (float)lerpToMinAtWave));
-            interval = Mathf.Lerp(baseInterval, minInterval, t);
-
-            budget = Mathf.RoundToInt(baseBudget * Mathf.Pow(budgetGrowth, wave - 1));
-            queued = 0;
-
-            // Initial burst at wave start
-            Enqueue(initialBurst);
-
-            float timer = 0f;
-
-            while (true)
+            if (spawner == null || spawner.spawnedEnemies == null)
             {
-                timer += Time.deltaTime;
-
-                // Periodic enqueue (e.g., every `interval`, add `flowPerTick` to queue)
-                if (budget > 0 && timer >= interval)
-                {
-                    timer -= interval;
-                    Enqueue(flowPerTick);
-                }
-
-                // Move from queue → actual spawns (respecting on-field concurrency)
-                Flush(concurrencyCap);
-
-                // Exit when the wave is fully spent and the field is clear:
-                //   - no budget left, no queued spawns, and no enemies on field
-                if (budget <= 0 && queued <= 0 && OnField() == 0)
-                    break;
-
-                yield return null;
+                Debug.LogError("[WaveDirector] EnemySpawner reference missing.");
+                running = false;
+                yield break;
             }
 
-            running = false;
+            int waveNumber = idx + 1;
+            WaveConfig cfg = GetWaveConfig(waveNumber);
 
-            // Optional: notify listeners. If EnemySpawner already ends the wave,
-            // you may leave this unassigned to avoid duplicate signaling.
+            // inform spawner about this wave's total
+            spawner.BeginWave(cfg.total);
+
+            int spawned = 0;
+
+            // 1) First batch
+            spawned += SpawnBatch(cfg.batchSize, waveNumber);
+
+            while (spawned < cfg.total)
+            {
+                // 2) Wait until field is clear
+                yield return new WaitUntil(() => OnField() == 0);
+
+                // 3) Next batch (clamped to remaining)
+                int remain = cfg.total - spawned;
+                int next = Mathf.Min(cfg.batchSize, remain);
+                spawned += SpawnBatch(next, waveNumber);
+            }
+
+            // final wait until field is clear
+            yield return new WaitUntil(() => OnField() == 0);
+
+            running = false;
             onWaveComplete?.Invoke();
         }
 
-        /// <summary>
-        /// Returns current number of enemies on the field (from EnemySpawner).
-        /// </summary>
+        /// <summary>Enemies currently on the field.</summary>
         int OnField()
         {
-            return (spawner != null && spawner.spawnedEnemies != null)
+            return spawner != null && spawner.spawnedEnemies != null
                 ? spawner.spawnedEnemies.Count
                 : 0;
         }
 
-        /// <summary>
-        /// Adds up to `count` spawns to the queue, clamped by remaining budget.
-        /// </summary>
-        void Enqueue(int count)
+        /// <summary>Spawn `count` enemies using wave-dependent type ratios.</summary>
+        int SpawnBatch(int count, int waveNumber)
         {
-            int add = Mathf.Min(count, budget);
-            if (add <= 0) return;
-            queued += add;
-            budget -= add;
-        }
+            int spawnedNow = 0;
 
-        /// <summary>
-        /// Converts queued spawns into actual enemies, without exceeding on-field cap.
-        /// Pulls from object pools directly and registers to EnemySpawner bookkeeping.
-        /// </summary>
-        void Flush(int concurrencyCap)
-        {
-            if (spawner == null) return;
-
-            int canSpawn = Mathf.Max(0, concurrencyCap - OnField());
-            if (canSpawn <= 0 || queued <= 0) return;
-
-            int toSpawn = Mathf.Min(queued, canSpawn);
-
-            for (int i = 0; i < toSpawn; i++)
+            for (int i = 0; i < count; i++)
             {
-                // Choose pool key by wave-specific type weights
-                string poolKey = PickPoolKeyByWave(wave); // "RunEnemy"/"ChaseEnemy"/"ShootEnemy"
-
-                // Pull from pool and activate
-                GameObject enemy = GameManager.Instance.poolManager.TakeFromPool(poolKey);
-                enemy.SetActive(true);
-
-                // Basic initialization
-                var e = enemy.GetComponent<Enemy>();
-                e.UpdateStat();
-
-                // TODO: Replace with your spawn-point logic later
-                enemy.transform.position = Vector3.zero;
-
-                // Register to EnemySpawner for tracking and removal callback
-                spawner.spawnedEnemies.Add(enemy);
-                e.OnDeath += spawner.RemovedEnemyFromSpawnList;
+                string poolKey = PickPoolKeyByWave(waveNumber); // "RunEnemy" / "ChaseEnemy" / "ShootEnemy"
+                var enemy = spawner.SpawnFromPool(poolKey);     // spawner handles position/list/callbacks
+                if (enemy == null)
+                {
+                    Debug.LogWarning($"[WaveDirector] Failed to spawn from pool: {poolKey}");
+                    continue;
+                }
+                spawnedNow++;
             }
 
-            queued -= toSpawn;
+            return spawnedNow;
         }
 
-        /// <summary>
-        /// Returns a pool key based on wave-dependent type weights.
-        /// Pool names must exactly match:
-        ///   "RunningEnemy", "ChasingEnemy", "ShootingEnemy"
-        /// </summary>
+        /// <summary>Compute WaveConfig for a given waveNumber (1-based).</summary>
+        WaveConfig GetWaveConfig(int waveNumber)
+        {
+            // total grows exponentially from startTotal
+            int total = Mathf.Max(1,
+                Mathf.RoundToInt(startTotal * Mathf.Pow(totalGrowth, waveNumber - 1)));
+
+            // batch grows stepwise (+1 every N waves), clamped
+            int batch = minBatch;
+            if (batchEveryNWaves > 0)
+                batch += (waveNumber - 1) / batchEveryNWaves;
+
+            batch = Mathf.Clamp(batch, minBatch, maxBatch);
+            batch = Mathf.Min(batch, total); // batch cannot exceed total
+
+            return new WaveConfig { batchSize = batch, total = total };
+        }
+
+        // Convenience for other scripts (e.g., UI)
+        public int TotalFor(int waveNumber) => GetWaveConfig(waveNumber).total;
+        public int BatchFor(int waveNumber) => GetWaveConfig(waveNumber).batchSize;
+
+        /// <summary>Pick pool key by wave-dependent type weights.</summary>
         string PickPoolKeyByWave(int w)
         {
             Vector3 wt = GetTypeWeights(w); // x=Runner, y=Chaser, z=Shooting
@@ -164,17 +145,14 @@ namespace Margot
             return "ShootEnemy";
         }
 
-        /// <summary>
-        /// Wave-dependent weights for (Runner, Chaser, Shooting).
-        /// Sums to ~1.0 after normalization.
-        /// </summary>
+        /// <summary>Type ratios (Runner, Chaser, Shooting), normalized.</summary>
         Vector3 GetTypeWeights(int w)
         {
-            if (w <= 2) return new Vector3(1f, 0f, 0f);           // Waves 1–2: Runner only
-            if (w <= 5) return new Vector3(0.7f, 0.3f, 0f);           // Waves 3–5: Add Chaser
-            if (w <= 9) return new Vector3(0.55f, 0.30f, 0.15f);        // Waves 6–9: Add Shooting
+            if (w <= 2) return new Vector3(1f, 0f, 0f);              // waves 1–2: Runner only
+            if (w <= 5) return new Vector3(0.7f, 0.3f, 0f);          // waves 3–5: Runner + Chaser
+            if (w <= 9) return new Vector3(0.55f, 0.30f, 0.15f);     // waves 6–9: add Shooting
 
-            // 10+: gradually tilt from Runner→Chaser; keep Shooting steady
+            // waves 10+: tilt Runner→Chaser, keep Shooting steady
             float t = Mathf.Clamp01((w - 10) / 20f);
             float runner = Mathf.Lerp(0.45f, 0.30f, t);
             float chaser = Mathf.Lerp(0.35f, 0.45f, t);

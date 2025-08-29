@@ -54,7 +54,9 @@ namespace Margot
 
         public void Dead()
         {
-
+            GameObject bloodParticle = GameManager.Instance.poolManager.TakeFromPool("BloodParticle");
+            bloodParticle.SetActive(true);
+            bloodParticle.transform.position = this.transform.position;
         }
 
     }

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Margot
 {
@@ -50,11 +51,13 @@ namespace Margot
 
         void OnEnable()
         {
-            canAttack = true;
+            // canAttack = true;
         }
         void OnDisable()
         {
             canAttack = false;
+            Color color = Color.white;
+            GetComponent<Image>().color = color;
         }
 
         public void UpdateStat()
@@ -86,9 +89,15 @@ namespace Margot
             }
         }
 
+        public void EnableAttack(bool val)
+        {
+            canAttack = val;
+            GetComponent<BoxCollider2D>().isTrigger = !val;
+        }
+
         public virtual void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.CompareTag("PlayerBullet"))
+            if (collision.CompareTag("PlayerBullet") && canAttack)
             {
                 GettingHit();
             }
@@ -96,7 +105,7 @@ namespace Margot
 
         public virtual void OnCollisionEnter2D(Collision2D collision) 
         { 
-            if (collision.gameObject.tag == "Player")
+            if (collision.gameObject.tag == "Player" && canAttack)
             {
                 collision.gameObject.GetComponent<Player>().GettingHit(attackDamage);
             }
@@ -107,6 +116,10 @@ namespace Margot
             currentHealth = maxHealth;
             // ! add dying animation or something here
             GameManager.Instance.poolManager.ReturnToPool(enemyType.ToString() + "Enemy", this.gameObject);
+
+            GameObject bloodParticle = GameManager.Instance.poolManager.TakeFromPool("BloodParticle");
+            bloodParticle.SetActive(true);
+            bloodParticle.transform.position = this.transform.position;
 
             OnDeath?.Invoke(this.gameObject);
 
