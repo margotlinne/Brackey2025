@@ -8,11 +8,15 @@ namespace Margot
     public class UIManager : MonoBehaviour
     {
         public enum CanvasType { roulette }
+
         [Header("Text")]
         public TextMeshProUGUI waveText;
 
         [Header("Canvas")]
         public GameObject rouletteCanvas;
+
+        [Header("UI")]
+        public GameTimer gameTimer;
 
         private List<GameObject> canvasLists = new List<GameObject>();
 
