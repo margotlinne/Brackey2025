@@ -16,8 +16,8 @@ namespace Margot
         [HideInInspector] public Rigidbody2D rb;
 
         [Header("Shooting")]
-        public float? attackSpeedSPS = 0.5f;
-        [HideInInspector] public float? fireCooldown = 0f;
+        public float attackSpeedSPS = 0.5f;
+        [HideInInspector] public float fireCooldown = 0f;
         public float attackDamage;
         public int? bulletPerShot;
         Coroutine detectAttackedCoroutine = null;
@@ -45,17 +45,25 @@ namespace Margot
             Debug.Log("[Player] Update player stat");
 
             moveSpeed = GameManager.Instance.statManager.playerStat.moveSpeed;
-            attackSpeedSPS = GameManager.Instance.statManager.playerStat.attackSpeedSPS;
+            attackSpeedSPS = PlayerAttackInterval(GameManager.Instance.statManager.playerStat.attackSpeedSPS);
             attackDamage = GameManager.Instance.statManager.playerStat.attackDamage;
             maxHealth = GameManager.Instance.statManager.playerStat.maxHealth;
             bulletPerShot = GameManager.Instance.statManager.playerStat.bulletsPerShot;
+        }
+
+        float PlayerAttackInterval(float attackSpeed)
+        {
+            float minInterval = 0.1f; 
+            float maxInterval = 1.0f;
+            float decayRate = 0.85f;  
+            return Mathf.Max(minInterval, maxInterval * Mathf.Pow(decayRate, attackSpeed - 1));
         }
 
         public void GettingHit(float damage)
         {
             if (detectAttackedCoroutine == null)
             {
-                StartCoroutine(DetectAttacked(damage));
+                detectAttackedCoroutine = StartCoroutine(DetectAttacked(damage));
             }       
         }
 

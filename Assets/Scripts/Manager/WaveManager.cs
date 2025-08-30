@@ -26,8 +26,8 @@ namespace Margot
             {
                 GameManager.Instance.uiManager.gameTimer.PauseTimer();
                 GameManager.Instance.uiManager.OpenCanvas(UIManager.CanvasType.roulette);
+                // GameManager.Instance.rouletteManager.SetRoulette();
                 currentWave++;
-
             }
             isWaveDone = false;
         }
@@ -47,6 +47,7 @@ namespace Margot
 
             GameManager.Instance.uiManager.CloseCanvas(UIManager.CanvasType.roulette);
             GameManager.Instance.uiManager.gameTimer.ResumeTimer();
+            GameManager.Instance.rouletteManager.ResetWheel();
             // waveCountdown.StartAnimation();
             StartWave(); // no countdown, straightly spawn enemies
             yield break;

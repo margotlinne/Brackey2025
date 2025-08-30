@@ -114,8 +114,18 @@ namespace Margot
             moveSpeed = enemyStat.moveSpeed;
             maxHealth = enemyStat.maxHealth;
             attackDamage = enemyStat.attackDamage;
-            attackSpeed = enemyStat.attackSpeedSPS;
+            attackSpeed = EnemyAttackInterval(enemyStat.attackSpeedSPS);
         }
+
+
+        float EnemyAttackInterval(float attackSpeed)
+        {
+            float baseInterval = 6.0f; 
+            float growthRate = 0.7f;    
+
+            return baseInterval * Mathf.Pow(growthRate, attackSpeed - 1);
+        }
+
 
         public void EnableAttack(bool val)
         {
