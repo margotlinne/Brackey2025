@@ -6,6 +6,8 @@ namespace Margot
 {
     public class Player : MonoBehaviour
     {
+        public AudioSource audioSource;
+        public AudioClip clip;
         [Header("Info")]
         public float maxHealth = 30f;
         public float currentHealth = 30f;
@@ -71,6 +73,8 @@ namespace Margot
         {
             Debug.Log("[Player] player got hit");
             currentHealth -= damage;
+            audioSource.clip = clip;
+            audioSource.Play();
 
             if (currentHealth <= 0) Dead();
 

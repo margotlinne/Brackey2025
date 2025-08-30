@@ -5,6 +5,8 @@ namespace Margot
 {
     public class WaveManager : MonoBehaviour
     {
+        public AudioSource audioSource;
+        public AudioClip clip;
         public int currentWave;
         public bool isWaveDone = true;
 
@@ -67,6 +69,9 @@ namespace Margot
         {
             Debug.Log("[WaveManager] wave done");
             isWaveDone = true;
+            audioSource.clip = clip;
+            audioSource.Play();
+
             RouletteEvent();
         }
     }

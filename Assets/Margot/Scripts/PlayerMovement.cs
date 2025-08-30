@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,6 +7,7 @@ namespace Margot
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerMovement : MonoBehaviour
     {
+
         [Header("Visual")]
         [SerializeField] private Transform visual;
 
@@ -57,6 +59,8 @@ namespace Margot
                 float angle = Mathf.Atan2(lastDir.y, lastDir.x) * Mathf.Rad2Deg;
                 visual.rotation = Quaternion.Euler(0f, 0f, angle);
             }
+
         }
     }
+
 }
