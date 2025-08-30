@@ -198,7 +198,6 @@ namespace Margot
             float spinTime = Random.Range(3f, 4.5f);
             float elapsed = 0f;
             float spinSpeed = 720f;
-            RouletteBlock selectedBlock = null;
 
             while (elapsed < spinTime)
             {
@@ -208,24 +207,55 @@ namespace Margot
                 yield return null;
             }
 
-            float finalAngle = wheel.eulerAngles.z;
-            if (finalAngle > 180f) finalAngle -= 360f;
-            Debug.Log("Final Angle: " + finalAngle);
+            float wheelZ = wheel.eulerAngles.z;
+            if (wheelZ > 180f) wheelZ -= 360f;
 
-            float sliceAngle = 360f / wheelBlockCount;
+            RouletteBlock selectedBlock = null;
 
-            for (int i = 0; i < wheelBlockCount; i++)
+            if (wheelBlockCount > 0)
             {
-                float blockStart = blocksInWheel[i].transform.eulerAngles.z;
-                if (blockStart > 180f) blockStart -= 360f;
-
-                float blockEnd = blockStart - sliceAngle;
-
-                if (finalAngle < blockStart && finalAngle >= blockEnd)
+                float[] angles = new float[wheelBlockCount];
+                for (int i = 0; i < wheelBlockCount; i++)
                 {
-                    selectedBlock = blocksInWheel[i + 1];
-                    break;
+                    float localZ = blocksInWheel[i].transform.localEulerAngles.z;
+                    if (localZ > 180f) localZ -= 360f;
+
+                    float angle = localZ + wheelZ;
+                    if (angle > 180f) angle -= 360f; // [-180,180) 범위로 보정
+                    angles[i] = angle;
+
+                    Debug.Log(i + " " + angle);
                 }
+
+                int chosenIndex = -1;
+                float minAbove = 9999f;
+                float maxBelow = -9999f;
+
+                // -180보다 큰 블록 중 가장 작은 값
+                for (int i = 0; i < wheelBlockCount; i++)
+                {
+                    if (angles[i] > -180f && angles[i] < minAbove)
+                    {
+                        minAbove = angles[i];
+                        chosenIndex = i;
+                    }
+                }
+
+                // 없으면 -180 이하 중 가장 큰 값
+                if (chosenIndex == -1)
+                {
+                    for (int i = 0; i < wheelBlockCount; i++)
+                    {
+                        if (angles[i] <= -180f && angles[i] > maxBelow)
+                        {
+                            maxBelow = angles[i];
+                            chosenIndex = i;
+                        }
+                    }
+                }
+
+                if (chosenIndex != -1)
+                    selectedBlock = blocksInWheel[chosenIndex];
             }
 
             if (selectedBlock != null)
@@ -239,6 +269,7 @@ namespace Margot
             yield return new WaitForSeconds(3f);
             GameManager.Instance.waveManager.NewWave();
         }
+
 
     }
 
