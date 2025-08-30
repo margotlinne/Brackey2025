@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     public StatManager statManager;
     public ResolutionManager resolutionManager;
 
+    [Header("Core")]
+    public bool isGameOver = false;
+
     void Awake()
     {
         #region singleton
@@ -27,7 +30,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (uiManager.rouletteCanvas.activeSelf)
+        if (uiManager.isCanvasOn)
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;

@@ -14,17 +14,15 @@ namespace Margot
         [Min(0)] public float attackDamage; // damage per hit
         [Min(0)] public float moveSpeed;  // movement speed
         [Min(1)] public float maxHealth; // maximum health
-
-        [Header("Optional")]
-        public float? attackSpeedSPS; // shots per second (null if not used)
-        public int? bulletsPerShot;  // bullets per shot (null if not used)
+        public float attackSpeedSPS; // shots per second (null if not used)
+        public int bulletsPerShot;  // bullets per shot (null if not used)
 
         /// <summary>
         /// Returns attack interval in seconds.
         /// If attackSpeedSPS is null, returns Infinity.
         /// </summary>
         public float AttackInterval =>
-            attackSpeedSPS.HasValue ? 1f / Mathf.Max(0.01f, attackSpeedSPS.Value) : float.PositiveInfinity;
+            attackSpeedSPS > 0f ? 1f / Mathf.Max(0.01f, attackSpeedSPS) : float.PositiveInfinity;
     }
 
     /// <summary>

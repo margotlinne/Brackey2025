@@ -28,10 +28,15 @@ namespace Margot
             hasPointer = true;
         }
 
+        void Update()
+        {
+            if (GameManager.Instance.isGameOver) gameObject.SetActive(false);
+        }
+
         private void LateUpdate()
         {
             if (canvasRect == null || cam == null) return;
-            if (GameManager.Instance.uiManager.rouletteCanvas.activeSelf) return;
+            if (GameManager.Instance.uiManager.isCanvasOn) return;
 
             // get screen point (from input or fallback to Mouse.current)
             Vector2 sp = hasPointer

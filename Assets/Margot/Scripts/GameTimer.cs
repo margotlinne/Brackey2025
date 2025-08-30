@@ -22,7 +22,7 @@ namespace Margot
 
         private void Update()
         {
-            if (!isPaused)
+            if (!isPaused && !GameManager.Instance.isGameOver)
             {
                 elapsedTime += Time.deltaTime;
 

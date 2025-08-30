@@ -21,7 +21,7 @@ namespace Margot
                 transform.rotation = Quaternion.Euler(0, 0, angle);
 
                 // use stat-based attack interval
-                if (thisEnemyStat != null && thisEnemyStat.attackSpeedSPS.HasValue)
+                if (enemyStat != null) // && enemyStat.attackSpeedSPS.HasValue
                 {
                     if (Time.time >= nextFireTime)
                     {
@@ -31,7 +31,7 @@ namespace Margot
                         bullet.GetComponent<Bullet>().Shoot(direction.normalized, bulletForce);
 
                         // nextFireTime = now + interval (ex: 0.5 sec if SPS=2)
-                        nextFireTime = Time.time + thisEnemyStat.AttackInterval;
+                        nextFireTime = Time.time + enemyStat.AttackInterval;
                     }
                 }
             }

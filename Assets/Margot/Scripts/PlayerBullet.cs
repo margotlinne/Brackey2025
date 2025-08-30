@@ -13,6 +13,7 @@ namespace Margot
             {
                 Debug.Log("[BulletBehaviour] player bullet collided with enemy");
                 ReturnBullet();
+                collision.GetComponent<Enemy>().GettingHit();
             }
         }
 
