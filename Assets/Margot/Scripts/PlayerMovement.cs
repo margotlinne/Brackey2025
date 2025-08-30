@@ -9,7 +9,7 @@ namespace Margot
         [Header("Visual")]
         [SerializeField] private Transform visual;
 
-        private Vector2 moveInput;
+        [HideInInspector] public Vector2 moveInput;
         private Vector2 lastDir = Vector2.right;
 
         Player player;

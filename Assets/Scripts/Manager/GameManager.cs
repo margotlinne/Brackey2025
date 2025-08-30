@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public WaveManager waveManager;
     public StatManager statManager;
     public ResolutionManager resolutionManager;
+    public RouletteManager rouletteManager;
 
     [Header("Core")]
     public bool isGameOver = false;

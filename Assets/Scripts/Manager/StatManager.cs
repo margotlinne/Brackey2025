@@ -4,6 +4,7 @@ namespace Margot
 {
     public class StatManager : MonoBehaviour
     {
+        public enum StatType { e_attackDamage, e_attackSpeed, e_moveSpeed, e_health, p_attackDamage, p_attackSpeed, p_moveSpeed, p_health}
         [Header("Enemy")]
         public EnemyStats enemyStat;
 
@@ -34,6 +35,38 @@ namespace Margot
 
             player.UpdateStat();
             GameManager.Instance.uiManager.UpdateStatUIText();
+        }
+
+        public void UpdateStats(StatType type, int value)
+        {
+            Debug.Log("[StatManager] Update Stat: " + type.ToString() + " type, value to : " + value.ToString());
+            switch (type)
+            {
+                case StatType.e_attackDamage:
+                    enemyStat.attackDamage = value;
+                    break;
+                case StatType.e_attackSpeed:
+                    enemyStat.attackSpeedSPS = value;
+                    break;
+                case StatType.e_moveSpeed:
+                    enemyStat.moveSpeed = value;
+                    break;
+                case StatType.e_health:
+                    enemyStat.maxHealth = value;
+                    break;
+                case StatType.p_attackDamage:
+                    playerStat.attackDamage = value;
+                    break;
+                case StatType.p_attackSpeed:
+                    playerStat.attackSpeedSPS = value;
+                    break;
+                case StatType.p_moveSpeed:
+                    playerStat.moveSpeed = value;
+                    break;
+                case StatType.p_health:
+                    playerStat.maxHealth = value;
+                    break;
+            }
         }
     }
 }

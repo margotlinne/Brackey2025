@@ -34,6 +34,14 @@ namespace Margot
         {
             canvasLists.Add(rouletteCanvas);
             canvasLists.Add(gameOverCanvas);
+
+            foreach (var canvas in canvasLists)
+            {
+                if (canvas.gameObject.activeSelf)
+                {
+                    isCanvasOn = true; return;
+                }
+            }
         }
 
         void Update()

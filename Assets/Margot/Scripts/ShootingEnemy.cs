@@ -8,7 +8,7 @@ namespace Margot
         [Header("Specific Info")]
         public Transform firePoint;
         public float fireRate = 2f;
-        public float bulletForce = 50f;
+        public float bulletForce = 25f;
 
         private float nextFireTime = 0f;
 
