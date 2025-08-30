@@ -11613,13 +11613,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyStat:
     attackDamage: 1
-    moveSpeed: 1
+    moveSpeed: 3
     maxHealth: 2
     attackSpeedSPS: 1
     bulletsPerShot: 1
   playerStat:
     attackDamage: 1
-    moveSpeed: 1
+    moveSpeed: 5
     maxHealth: 3
     attackSpeedSPS: 1
     bulletsPerShot: 1

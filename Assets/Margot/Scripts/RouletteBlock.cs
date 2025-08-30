@@ -32,6 +32,11 @@ namespace Margot
 
         void Start()
         {
+            if (isPositive) rewardValue = GameManager.Instance.statManager.GetCurrentStat(type) + 1;
+            else if (GameManager.Instance.statManager.GetCurrentStat(type) - 1 > 0)
+            {
+                rewardValue = GameManager.Instance.statManager.GetCurrentStat(type) - 1;
+            }
             baseRewardValue = rewardValue;
         }
         void Update()

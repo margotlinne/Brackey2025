@@ -37,6 +37,42 @@ namespace Margot
             GameManager.Instance.uiManager.UpdateStatUIText();
         }
 
+        public int GetCurrentStat(StatType type)
+        {
+            int val = 0;
+
+            switch (type)
+            {
+                case StatType.e_attackDamage:
+                    val = Mathf.RoundToInt(enemyStat.attackDamage);
+                    break;
+                case StatType.e_attackSpeed:
+                    val = Mathf.RoundToInt(enemyStat.attackSpeedSPS);
+                    break;
+                case StatType.e_moveSpeed:
+                    val = Mathf.RoundToInt(enemyStat.moveSpeed);
+                    break;
+                case StatType.e_health:
+                    val = Mathf.RoundToInt(enemyStat.maxHealth);
+                    break;
+                case StatType.p_attackDamage:
+                    val = Mathf.RoundToInt(playerStat.attackDamage);
+                    break;
+                case StatType.p_attackSpeed:
+                    val = Mathf.RoundToInt(playerStat.attackSpeedSPS);
+                    break;
+                case StatType.p_moveSpeed:
+                    val = Mathf.RoundToInt(playerStat.moveSpeed);
+                    break;
+                case StatType.p_health:
+                    val = Mathf.RoundToInt(playerStat.maxHealth);
+                    break;
+            }
+
+            return val;
+        }
+
+
         public void UpdateStats(StatType type, int value)
         {
             Debug.Log("[StatManager] Update Stat: " + type.ToString() + " type, value to : " + value.ToString());

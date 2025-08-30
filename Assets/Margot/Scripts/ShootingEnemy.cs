@@ -44,7 +44,7 @@ namespace Margot
                     if (Time.time >= nextFireTime)
                     {            
                         anim.SetTrigger("Shoot");
-                        nextFireTime = Time.time + enemyStat.attackSpeedSPS;
+                        nextFireTime = Time.time + attackSpeed;
                     }
                 }
 
