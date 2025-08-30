@@ -139,6 +139,7 @@ namespace Margot
 
         public void Dead(bool gameover)
         {
+            Debug.Log("[Enemy] Dead");
             currentHealth = maxHealth;
 
             anim.Rebind();
