@@ -13,6 +13,11 @@ namespace Margot
             rb = GetComponent<Rigidbody2D>();   
         }
 
+        void OnEnable()
+        {
+            transform.localScale = Vector3.Scale(transform.localScale, GameManager.Instance.resolutionManager.ScaleRatio);
+        }
+
         protected virtual void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.CompareTag("Wall"))

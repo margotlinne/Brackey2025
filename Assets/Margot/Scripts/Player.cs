@@ -32,6 +32,8 @@ namespace Margot
             currentHealth = maxHealth;
         }
 
+
+
         public void UpdateStat()
         {
             Debug.Log("[Player] Update player stat");

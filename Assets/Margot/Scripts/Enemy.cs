@@ -52,12 +52,18 @@ namespace Margot
         void OnEnable()
         {
             // canAttack = true;
+            transform.localScale = Vector3.Scale(transform.localScale, GameManager.Instance.resolutionManager.ScaleRatio);
         }
+
+
         void OnDisable()
         {
             canAttack = false;
-            Color color = Color.white;
-            GetComponent<Image>().color = color;
+            if (GetComponent<Image>() != null)
+            {
+                Color color = Color.white;
+                GetComponent<Image>().color = color;
+            }
         }
 
         public void UpdateStat()
