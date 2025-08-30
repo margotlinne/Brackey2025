@@ -8,7 +8,8 @@ namespace Margot
         [SerializeField] private Vector2 moveDirection;
         [SerializeField] private bool isDizzy = false;  
 
-        [SerializeField] private float dizzyTime = 1f; 
+        [SerializeField] private float dizzyTime = 1f;
+        private bool setAnim = false;
 
         protected override void Start()
         {
@@ -21,6 +22,7 @@ namespace Margot
             if (canAttack && !isDizzy)
             {
                 rb.linearVelocity = moveDirection * moveSpeed;
+                anim.SetBool("isMoving", true);
             }
             else
             {
@@ -41,6 +43,9 @@ namespace Margot
 
             if (collision.gameObject.CompareTag("Wall"))
             {
+                setAnim = false;
+                anim.SetBool("isMoving", false);
+                anim.SetBool("isDizzy", true);
                 Vector2 normal = collision.contacts[0].normal;
                 moveDirection = Vector2.Reflect(moveDirection, normal).normalized;
 
@@ -56,10 +61,19 @@ namespace Margot
             isDizzy = true;
             yield return new WaitForSeconds(dizzyTime); 
             isDizzy = false;
+            anim.SetBool("isDizzy", false);
+            if (!setAnim)
+            {
+                anim.SetTrigger("Move");
+                setAnim = true;
+            }
         }
 
-        void OnDisable()
+
+        protected override void OnDisable()
         {
+            base.OnDisable();
+
             isDizzy = false;
         }
     }

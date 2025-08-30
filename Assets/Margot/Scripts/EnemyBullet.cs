@@ -12,6 +12,7 @@ namespace Margot
             if (collision.CompareTag("Player"))
             {
                 Debug.Log("[BulletBehaviour] enemy bullet collided with player");
+                collision.GetComponent<Player>().GettingHit(GameManager.Instance.statManager.enemyStat.attackDamage);
                 ReturnBullet();
             }
         }

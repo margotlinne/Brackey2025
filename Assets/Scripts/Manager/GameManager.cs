@@ -1,6 +1,7 @@
 using Margot;
 using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class GameManager : MonoBehaviour
     public PoolManager poolManager;
     public WaveManager waveManager;
     public StatManager statManager;
+    public ResolutionManager resolutionManager;
+
+    [Header("Core")]
+    public bool isGameOver = false;
 
     void Awake()
     {
@@ -26,7 +31,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (uiManager.rouletteCanvas.activeSelf)
+        if (uiManager.isCanvasOn)
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -36,5 +41,10 @@ public class GameManager : MonoBehaviour
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Confined;
         }
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(0);
     }
 }

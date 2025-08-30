@@ -26,10 +26,20 @@ namespace Margot
 
         public void OnMove(InputAction.CallbackContext context)
         {
-            moveInput = context.ReadValue<Vector2>();
+            if (!player.cantMove)
+            {
+                moveInput = context.ReadValue<Vector2>();
 
-            if (moveInput.sqrMagnitude > 1f)
-                moveInput = moveInput.normalized;
+                if (moveInput.sqrMagnitude > 1f)
+                    moveInput = moveInput.normalized;
+            }
+            else moveInput = Vector2.zero;
+               
+        }
+
+        void Update()
+        {
+            
         }
 
         private void FixedUpdate()

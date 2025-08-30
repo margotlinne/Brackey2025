@@ -6,9 +6,6 @@ namespace Margot
     public class HealthUI : MonoBehaviour
     {
         public Image[] healthImages;
-        public Sprite emptyHealthSprite;
-        public Sprite fullHealthSprite;
-
 
         private void Update()
         {
@@ -18,8 +15,8 @@ namespace Margot
 
         public void UpdateHealthUI()
         {
-            int maxHealthCount = Mathf.RoundToInt(GameManager.Instance.statManager.playerStat.maxHealth / 10f);
-            int currentHealthCount = Mathf.RoundToInt(GameManager.Instance.statManager.player.GetComponent<Player>().currentHealth / 10f);
+            int maxHealthCount = Mathf.RoundToInt(GameManager.Instance.statManager.playerStat.maxHealth);
+            int currentHealthCount = Mathf.RoundToInt(GameManager.Instance.statManager.player.GetComponent<Player>().currentHealth);
             int lostHealthCount = maxHealthCount - currentHealthCount;  
             int count = 0;
 
@@ -43,8 +40,8 @@ namespace Margot
                 Image healthImage = healthImages[i];
                 {
                     if (i >= currentHealthCount)
-                        healthImage.sprite = emptyHealthSprite;
-                    else healthImage.sprite = fullHealthSprite;
+                        healthImage.gameObject.SetActive(false);
+                    else healthImage.gameObject.SetActive(true);
                 }
             }
         }

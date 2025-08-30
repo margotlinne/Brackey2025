@@ -27,6 +27,7 @@ namespace Margot
                 GameManager.Instance.uiManager.gameTimer.PauseTimer();
                 GameManager.Instance.uiManager.OpenCanvas(UIManager.CanvasType.roulette);
                 currentWave++;
+
             }
             isWaveDone = false;
         }
@@ -36,6 +37,7 @@ namespace Margot
         /// </summary>
         public void NewWave()
         {
+            GameManager.Instance.uiManager.UpdateStatUIText();
             StartCoroutine(CloseRouletteCanvas());
         }
 
