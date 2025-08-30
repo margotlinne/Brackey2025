@@ -1,6 +1,7 @@
 using Margot;
 using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -40,5 +41,10 @@ public class GameManager : MonoBehaviour
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Confined;
         }
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(0);
     }
 }
