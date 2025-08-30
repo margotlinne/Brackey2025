@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Margot
@@ -5,8 +6,24 @@ namespace Margot
     public class ChasingEnemy : Enemy
     {
         [Header("Approach")]
-        [SerializeField] private float stopDistance = 1.2f;   // 이 거리 이내면 정지
-        [SerializeField] private float slowDistance = 2.0f;   // 이 거리부터 서서히 감속
+        [SerializeField] private float stopDistance = 0f; 
+        [SerializeField] private float slowDistance = 0.5f; 
+
+        [Header("Sprites")]
+        public Sprite[] up;
+        public Sprite[] down;
+        public Sprite[] left;
+        public Sprite[] right;
+        public Sprite[] upLeft;
+        public Sprite[] upRight;
+        public Sprite[] downLeft;
+        public Sprite[] downRight;
+
+        Sprite currentSprite1;
+        Sprite currentSprite2;
+
+        Coroutine animationCoroutine = null;
+
 
         void FixedUpdate()
         {
@@ -16,31 +33,104 @@ namespace Margot
                 return;
             }
 
-            if (!canAttack)
-            {
-                rb.linearVelocity = Vector2.zero; // 추적 중지 시 관성 제거
-                return;
-            }
-
             Vector2 toPlayer = (player.position - transform.position);
             float dist = toPlayer.magnitude;
 
-            if (dist <= stopDistance)
+            Vector2 dir = toPlayer.normalized;
+            if (canAttack) rb.linearVelocity = dir * moveSpeed;
+
+            UpdateSprite(dir);
+        }
+
+
+
+        protected override void Update()
+        {
+            base.Update();
+
+            if (animationCoroutine == null)
             {
-                rb.linearVelocity = Vector2.zero; // 너무 밀지 않도록 완전 정지
-                return;
+                animationCoroutine = StartCoroutine(AnimateSprites());
             }
 
-            // 감속 구간: stopDistance ~ slowDistance 사이에서 속도를 0→1로 보간
-            float speedFactor = 1f;
-            if (dist < slowDistance)
+        }
+
+        IEnumerator AnimateSprites()
+        {
+            while (true)
             {
-                float t = Mathf.InverseLerp(stopDistance, slowDistance, dist);
-                speedFactor = Mathf.SmoothStep(0f, 1f, t);
+                sr.sprite = currentSprite1;
+                yield return new WaitForSeconds(0.3f);
+                sr.sprite = currentSprite2;
+                yield return new WaitForSeconds(0.3f);
+            }            
+        }
+
+    
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            if (animationCoroutine != null)
+            {
+                StopCoroutine(animationCoroutine);
+                animationCoroutine = null;
+            }
+        }
+
+
+        protected override void UpdateSprite(Vector2 dir)
+        {
+            base.UpdateSprite(dir);
+
+            if (sr == null) return;
+
+            if (dir.x > 0.3f && dir.y > 0.3f)
+            {
+                currentSprite1 = upRight[0];
+                currentSprite2 = upRight[1];
+            }
+            else if (dir.x < -0.3f && dir.y > 0.3f)
+            {
+                currentSprite1 = upLeft[0];
+                currentSprite2 = upLeft[1];
+            }
+            else if (dir.x > 0.3f && dir.y < -0.3f)
+            {
+                currentSprite1 = downRight[0];
+                currentSprite2 = downRight[1];
+            }
+            else if (dir.x < -0.3f && dir.y < -0.3f)
+            {
+                currentSprite1 = downLeft[0];
+                currentSprite2 = downLeft[1];
             }
 
-            Vector2 dir = toPlayer / dist; // normalized
-            rb.linearVelocity = dir * (moveSpeed * speedFactor);
+            else if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+            {
+                if (dir.x > 0)
+                {
+                    currentSprite1 = right[0];
+                    currentSprite2 = right[1];
+                }
+                else
+                {
+                    currentSprite1 = left[0];
+                    currentSprite2 = left[1];
+                }
+            }
+            else
+            {
+                if (dir.y > 0)
+                {
+                    currentSprite1 = up[0];
+                    currentSprite2 = up[1];
+                }
+                else
+                {
+                    currentSprite1 = down[0];
+                    currentSprite2 = down[1];
+                }
+            }
         }
     }
 }

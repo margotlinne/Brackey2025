@@ -6924,7 +6924,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyStat:
     attackDamage: 1
-    moveSpeed: 5
+    moveSpeed: 2.5
     maxHealth: 2
     attackSpeedSPS: 0.5
     bulletsPerShot: 1

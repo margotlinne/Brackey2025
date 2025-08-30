@@ -19,6 +19,7 @@ namespace Margot
         public float attackDamage = 3f;
         public float attackSpeed = 3f;
         protected Animator anim = null;
+        protected SpriteRenderer sr = null;
 
         [Header("Player")]
         protected Transform player = null;
@@ -35,7 +36,8 @@ namespace Margot
         protected virtual void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
-            anim = GetComponent<Animator>();    
+            anim = GetComponent<Animator>();
+            sr = GetComponent<SpriteRenderer>();
         }
 
         protected virtual void Start()
@@ -55,14 +57,14 @@ namespace Margot
             EnableAttack(false);
         }
 
-        void OnEnable()
+        protected virtual void OnEnable()
         {
             // canAttack = true;
             transform.localScale = Vector3.Scale(transform.localScale, GameManager.Instance.resolutionManager.ScaleRatio);
         }
 
 
-        void OnDisable()
+        protected virtual void OnDisable()
         {
             canAttack = false; 
 
@@ -73,7 +75,7 @@ namespace Margot
             }
         }
 
-        void Update()
+        protected virtual void Update()
         {
             if (GameManager.Instance.isGameOver) Dead(true);
         }
@@ -132,6 +134,8 @@ namespace Margot
         }
 
         public virtual void OnCollisionEnter2D(Collision2D collision) { }
+
+        protected virtual void UpdateSprite(Vector2 dir) { }
 
         public void Dead(bool gameover)
         {
