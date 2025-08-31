@@ -621,7 +621,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '- Put at least 3 blocks.
+  m_text: '- Put at least 2 blocks.
 
 
     - Buff blocks cannot be more than half.
