@@ -451,6 +451,7 @@
 "Assets/Margot/Scripts/RouletteBlock.cs"
 "Assets/Margot/Scripts/RunningEnemy.cs"
 "Assets/Margot/Scripts/ShootingEnemy.cs"
+"Assets/Margot/Scripts/StartGame.cs"
 "Assets/Margot/Scripts/StatBase.cs"
 "Assets/Margot/Scripts/WaveCountDown.cs"
 "Assets/Margot/Scripts/WaveDirector.cs"

@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Assets\Margot\Scripts\ParticleSpawner.cs" />
     <Compile Include="Assets\Margot\Scripts\EnemySpawner.cs" />
+    <Compile Include="Assets\Margot\Scripts\StartGame.cs" />
     <Compile Include="Assets\Margot\Scripts\RunningEnemy.cs" />
     <Compile Include="Assets\Margot\Scripts\RouletteBlock.cs" />
     <Compile Include="Assets\Margot\Scripts\PlayerMovement.cs" />
