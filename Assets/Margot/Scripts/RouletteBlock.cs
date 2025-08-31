@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Margot
 {
-    public class RouletteBlock : MonoBehaviour
+    public class RouletteBlock : SoundPlayer
     {
         public StatManager.StatType type;
         public int rewardValue = 1;
@@ -138,6 +138,9 @@ namespace Margot
         public void SelectEffect()
         {
             GetComponent<Animation>().Play();
+
+            if (isPositive) PlaySound(0);
+            else PlaySound(1);
         }
 
         public void SetToDeathCard()

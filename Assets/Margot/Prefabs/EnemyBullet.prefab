@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2468080783145488440, guid: c86ff898e26914e4e8c0c30303063409, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2.4
+      value: 3.46056
       objectReference: {fileID: 0}
     - target: {fileID: 2468080783145488440, guid: c86ff898e26914e4e8c0c30303063409, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.4
+      value: 3.46056
       objectReference: {fileID: 0}
     - target: {fileID: 2468080783145488440, guid: c86ff898e26914e4e8c0c30303063409, type: 3}
       propertyPath: m_LocalScale.z
-      value: 8
+      value: 11.5352
       objectReference: {fileID: 0}
     - target: {fileID: 2468080783145488440, guid: c86ff898e26914e4e8c0c30303063409, type: 3}
       propertyPath: m_LocalPosition.x
@@ -138,3 +138,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1bf67ad518bf74499d3f72bd745e24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sounds:
+  - {fileID: 8300000, guid: a47eaaf0cfbb6f044b3f18d91584f36b, type: 3}
+  randSound: []

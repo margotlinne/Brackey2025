@@ -20,6 +20,7 @@ namespace Margot
         protected override void ReturnBullet()
         {
             base.ReturnBullet();
+            //PlaySound(0);
 
             // add particle or other effect here
             GameManager.Instance.poolManager.ReturnToPool("EnemyBullet", this.gameObject);

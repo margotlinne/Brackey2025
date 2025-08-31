@@ -5,11 +5,9 @@ using UnityEngine.UIElements;
 
 namespace Margot
 {
-    public class Enemy : MonoBehaviour
+    public class Enemy : SoundPlayer
     {
         public enum EnemyType { Chase, Run, Shoot };
-        public AudioSource audioSource;
-        public AudioClip clip;
 
         [Header("Info")]
         public EnemyType enemyType;
@@ -151,6 +149,7 @@ namespace Margot
 
         public void Dead(bool gameover)
         {
+            PlaySound(0);
             Debug.Log("[Enemy] Dead");
             currentHealth = maxHealth;
 
@@ -167,7 +166,6 @@ namespace Margot
             if (!gameover) OnDeath?.Invoke(this.gameObject);
 
 
-            DropItem();
         }
 
         public void GettingHit()
@@ -176,18 +174,12 @@ namespace Margot
             {
                 Debug.Log("[Enemy] " + enemyType.ToString() + " type enemy got hit");
                 currentHealth -= player.GetComponent<Player>().attackDamage;
-                audioSource.clip = clip;
-                audioSource.Play();
+                PlaySound(0);
 
                 anim.SetTrigger("GettingHit");
 
                 if (currentHealth <= 0f) Dead(false);
             }
-        }
-
-        public void DropItem()
-        {
-           
         }
     }
 

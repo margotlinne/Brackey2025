@@ -4,17 +4,15 @@ using static Margot.Enemy;
 
 namespace Margot
 {
-    public class Player : MonoBehaviour
+    public class Player : SoundPlayer
     {
-        public AudioSource audioSource;
-        public AudioClip clip;
         [Header("Info")]
         public float maxHealth = 30f;
         public float currentHealth = 30f;
 
         [Header("Movement")]
         public bool cantMove = false;
-        public float moveSpeed; 
+        public float moveSpeed;
         [HideInInspector] public Rigidbody2D rb;
 
         [Header("Shooting")]
@@ -25,7 +23,7 @@ namespace Margot
         Coroutine detectAttackedCoroutine = null;
 
         // [Header("Health")]
-        
+
 
         private void Awake()
         {
@@ -57,9 +55,9 @@ namespace Margot
 
         float PlayerAttackInterval(float attackSpeed)
         {
-            float minInterval = 0.1f; 
+            float minInterval = 0.1f;
             float maxInterval = 1.0f;
-            float decayRate = 0.85f;  
+            float decayRate = 0.85f;
             return Mathf.Max(minInterval, maxInterval * Mathf.Pow(decayRate, attackSpeed - 1));
         }
 
@@ -68,36 +66,33 @@ namespace Margot
             if (detectAttackedCoroutine == null)
             {
                 detectAttackedCoroutine = StartCoroutine(DetectAttacked(damage));
-            }       
+            }
         }
 
-     IEnumerator DetectAttacked(float damage)
-{
-    Debug.Log("[Player] player got hit");
-    currentHealth -= damage;
+        IEnumerator DetectAttacked(float damage)
+        {
+            Debug.Log("[Player] player got hit");
+            currentHealth -= damage;
 
-    // Play hit animation
-    GetComponent<Animator>().SetTrigger("GettingHit");
+            // Play hit animation
+            GetComponent<Animator>().SetTrigger("GettingHit");
 
-    // Play hit sound
-    if (audioSource != null && clip != null)
-    {
-        audioSource.clip = clip;
-        audioSource.Play();
-    }
+            // Play hit sound
+            PlaySound(0);
 
-    if (currentHealth <= 0) Dead();
+            if (currentHealth <= 0) Dead();
 
-    yield return new WaitForSeconds(0.3f);
-    detectAttackedCoroutine = null;
-    yield break;
-}
+            yield return new WaitForSeconds(0.3f);
+            detectAttackedCoroutine = null;
+            yield break;
+        }
 
 
 
 
         public void Dead()
         {
+            PlaySound(1);
             cantMove = true;
             GameObject bloodParticle = GameManager.Instance.poolManager.TakeFromPool("BloodParticle");
             bloodParticle.SetActive(true);

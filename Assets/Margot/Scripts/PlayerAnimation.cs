@@ -21,6 +21,8 @@ namespace Margot
 
         void Update()
         {
+            if (GameManager.Instance.uiManager.isCanvasOn) return;
+
             Vector2 move = movement.moveInput;
 
             anim.SetFloat("MoveX", move.x);

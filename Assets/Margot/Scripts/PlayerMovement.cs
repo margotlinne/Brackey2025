@@ -8,9 +8,6 @@ namespace Margot
     public class PlayerMovement : MonoBehaviour
     {
 
-        [Header("Visual")]
-        [SerializeField] private Transform visual;
-
         [HideInInspector] public Vector2 moveInput;
         private Vector2 lastDir = Vector2.right;
 
@@ -53,13 +50,6 @@ namespace Margot
             Vector2 vel = player.rb.linearVelocity;
             if (vel.sqrMagnitude > 0.0001f)
                 lastDir = vel.normalized;
-
-            if (visual != null && lastDir.sqrMagnitude > 0.0001f)
-            {
-                float angle = Mathf.Atan2(lastDir.y, lastDir.x) * Mathf.Rad2Deg;
-                visual.rotation = Quaternion.Euler(0f, 0f, angle);
-            }
-
         }
     }
 

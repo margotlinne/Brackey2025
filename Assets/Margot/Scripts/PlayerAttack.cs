@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 namespace Margot
 {
-    public class PlayerAttack : MonoBehaviour
+    public class PlayerAttack : SoundPlayer
     {
 
         [Header("Shooting")]
@@ -41,7 +41,7 @@ namespace Margot
             {
                 GameObject bullet = GameManager.Instance.poolManager.bulletPool.GetBulletFromPool(BulletPool.BulletType.p_bullet, firePoint);
                 bullet.GetComponent<Bullet>().Shoot(-bullet.transform.right, bulletForce);
-                //PlaySound(0);
+                PlaySound(0);
 
                 player.fireCooldown = player.attackSpeedSPS; 
             }

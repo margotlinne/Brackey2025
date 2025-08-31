@@ -5,8 +5,6 @@ namespace Margot
 {
     public class PlayerBullet : Bullet
     {
-        public AudioSource audioSource;
-        public AudioClip clip;
 
         protected override void OnTriggerEnter2D(Collider2D collision)
         {
@@ -19,8 +17,7 @@ namespace Margot
                 GameManager.Instance.shaking.Shake();
                 ReturnBullet();
                 collision.GetComponent<Enemy>().GettingHit();
-                audioSource.clip = clip;
-                audioSource.PlayOneShot(clip);
+                PlaySound(0);
             }
         }
         protected override void ReturnBullet()

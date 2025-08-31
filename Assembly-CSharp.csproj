@@ -78,6 +78,7 @@
     <Compile Include="Assets\Margot\Scripts\ShootingEnemy.cs" />
     <Compile Include="Assets\Ryan\Scripts\ChasingEnemy.cs" />
     <Compile Include="Assets\Margot\Scripts\GameTimer.cs" />
+    <Compile Include="Assets\Scripts\Manager\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
     <Compile Include="Assets\Margot\Scripts\BulletPool.cs" />
     <Compile Include="Assets\Margot\Scripts\WaveCountDown.cs" />
@@ -96,7 +97,9 @@
     <Compile Include="Assets\Margot\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\Manager\RouletteManager.cs" />
     <Compile Include="Assets\Margot\Scripts\StatBase.cs" />
+    <Compile Include="Assets\Margot\Scripts\SoundPlayer.cs" />
     <Compile Include="Assets\Scripts\Manager\WaveManager.cs" />
+    <Compile Include="Assets\Margot\Scripts\SoundClip.cs" />
     <Compile Include="Assets\Margot\Scripts\EnemyBullet.cs" />
     <Compile Include="Assets\Scripts\Manager\StatManager.cs" />
     <Compile Include="Assets\Margot\Scripts\PlayerBullet.cs" />

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Margot
 {
-    public class Bullet : MonoBehaviour
+    public class Bullet : SoundPlayer
     {
         protected Rigidbody2D rb;
         

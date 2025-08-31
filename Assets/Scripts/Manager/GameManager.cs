@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public StatManager statManager;
     public ResolutionManager resolutionManager;
     public RouletteManager rouletteManager;
+    public AudioManager audioManager;
 
 
     public bool isGameOver = false;

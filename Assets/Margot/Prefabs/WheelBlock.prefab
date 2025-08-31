@@ -451,12 +451,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9bfbfde9251e774b9c2342c2e42d163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sounds:
+  - {fileID: 8300000, guid: 90603fcc510b8b747960ccf7d74a3d7f, type: 3}
+  - {fileID: 8300000, guid: 921978b989d9b464b96c780a829ebdb6, type: 3}
+  randSound: []
   type: 0
   rewardValue: 0
   baseRewardValue: 0
-  isPlayerStat: 0
+  increaseStat: 0
   isPositive: 0
   isSelected: 0
+  isDeathBlock: 0
   code: 0
   notAvailable: 0
   iconImage: {fileID: 5364055677068966385}
