@@ -66,7 +66,9 @@
     <Compile Include="Assets\Margot\Scripts\StartGame.cs" />
     <Compile Include="Assets\Margot\Scripts\RunningEnemy.cs" />
     <Compile Include="Assets\Margot\Scripts\RouletteBlock.cs" />
+    <Compile Include="Assets\Kaisara\Scripts\RouletteManager.cs" />
     <Compile Include="Assets\Margot\Scripts\PlayerMovement.cs" />
+    <Compile Include="Assets\Kaisara\Scripts\PlayerAttack.cs" />
     <Compile Include="Assets\Margot\Scripts\WorldShaking.cs" />
     <Compile Include="Assets\Margot\Scripts\WaveDirector.cs" />
     <Compile Include="Assets\Scripts\Manager\ResolutionManager.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="Assets\Scripts\Sound\Sound.cs" />
     <Compile Include="Assets\Ryan\Scripts\EnemyBullet.cs" />
     <Compile Include="Assets\Ryan\Scripts\RouletteWheel.cs" />
+    <Compile Include="Assets\Kaisara\Scripts\EnemySpawner.cs" />
     <Compile Include="Assets\Margot\Scripts\PlayerAttack.cs" />
     <Compile Include="Assets\Scripts\Manager\UIManager.cs" />
     <Compile Include="Assets\Margot\Scripts\HoverImage.cs" />
