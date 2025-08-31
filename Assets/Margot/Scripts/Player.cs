@@ -40,6 +40,8 @@ namespace Margot
         void Update()
         {
             cantMove = GameManager.Instance.uiManager.isCanvasOn;
+
+            if (GameManager.Instance.isGameOver) Dead();
         }
 
         public void UpdateStat()

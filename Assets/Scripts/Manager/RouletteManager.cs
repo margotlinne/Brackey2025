@@ -11,6 +11,7 @@ namespace Margot
     public class RouletteManager : MonoBehaviour
     {
         public List<RouletteBlock> rouletteBlocks = new List<RouletteBlock>();
+        public GameObject spinButtonObj;
         public Transform wheel;
         public Transform deckTransform;
         public RouletteBlock[] blocksInWheel;  // Slots in the wheel
@@ -40,6 +41,7 @@ namespace Margot
         public void SetRoulette()
         {
             deckTransform.gameObject.SetActive(true);
+            spinButtonObj.SetActive(true);
         }
 
         /// <summary>
@@ -103,13 +105,11 @@ namespace Margot
                     {
                         if (block.increaseStat)
                         {
-                            // 증가형 긍정 블럭 → 부정 블럭 수에 따라 강화
                             block.rewardValue += negative;
                             block.rewardValue = Mathf.Max(block.baseRewardValue, block.rewardValue - (positive - 1));
                         }
                         else
                         {
-                            // 감소형 긍정 블럭 → -1 처리, 단 1 이하로는 안내려감
                             block.rewardValue = Mathf.Max(1, block.baseRewardValue - 1);
                         }
                     }
@@ -223,7 +223,6 @@ namespace Margot
                     rotateAmount -= 360f * fill;
                 }
 
-                // --- [추가 부분] 보정 로직 ---
                 int positive = 0;
                 int negative = 0;
 
@@ -244,15 +243,14 @@ namespace Margot
                     {
                         if (b.isPositive && b.gameObject.activeSelf)
                         {
-                            b.rewardValue = b.baseRewardValue; // 초기화
+                            b.rewardValue = b.baseRewardValue; 
                             b.rewardValue += negative;
                             b.rewardValue = Mathf.Max(b.baseRewardValue, b.rewardValue - (positive - 1));
                         }
                     }
                 }
                 else
-                {
-                    // 긍정 비율이 50% 이상일 때는 보정 없음, base 값으로 리셋
+                { 
                     foreach (var b in blocksInWheel)
                     {
                         if (b.isPositive && b.gameObject.activeSelf)
@@ -298,12 +296,13 @@ namespace Margot
 
         IEnumerator SpinRoulette()
         {
+            spinButtonObj.SetActive(false);
             isWheelSpinning = true;
             deckTransform.gameObject.SetActive(false);
 
-            float spinTime = Random.Range(3f, 4.5f);
+            float spinTime = Random.Range(3f, 6f);
             float elapsed = 0f;
-            float spinSpeed = 720f;
+            float spinSpeed = Random.Range(720f, 760f);
 
             while (elapsed < spinTime)
             {
@@ -371,8 +370,11 @@ namespace Margot
 
             isWheelSpinning = false;
             yield return new WaitForSeconds(3f);
-            if (selectedBlock.sr != selectedBlock.deathIcon) GameManager.Instance.waveManager.NewWave();
-            else GameManager.Instance.uiManager.OpenCanvas(UIManager.CanvasType.gameover);
+            if (selectedBlock.isDeathBlock)
+            {
+                GameManager.Instance.uiManager.OpenCanvas(UIManager.CanvasType.gameover);
+            }
+            else GameManager.Instance.waveManager.NewWave();
         }
 
 

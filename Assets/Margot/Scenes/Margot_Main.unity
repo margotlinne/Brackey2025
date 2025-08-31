@@ -3010,6 +3010,7 @@ MonoBehaviour:
   - {fileID: 744711012}
   - {fileID: 77012696}
   - {fileID: 972489653}
+  spinButtonObj: {fileID: 1113934407}
   wheel: {fileID: 1626904533}
   deckTransform: {fileID: 236659614}
   blocksInWheel:
@@ -3417,6 +3418,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb059473f6288e48b0fa68996232108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
+  clip: {fileID: 0}
   currentWave: 0
   isWaveDone: 1
   enemySpawner: {fileID: 1326045459}
@@ -4698,7 +4701,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c1f42d1c3ab652741a79afb6bf5097e7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: eb1ab2de3161ac44cba29ab84dd9cfb1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9063,6 +9066,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cfd916b7d6f09340840a43e3c14f989, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
+  clip: {fileID: 0}
   maxHealth: 3
   currentHealth: 3
   cantMove: 0
@@ -10469,7 +10474,7 @@ SpriteRenderer:
   m_Size: {x: 1.83, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &1381045850

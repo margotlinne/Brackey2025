@@ -72,6 +72,7 @@
     <Compile Include="Assets\Margot\Scripts\WorldShaking.cs" />
     <Compile Include="Assets\Margot\Scripts\WaveDirector.cs" />
     <Compile Include="Assets\Scripts\Manager\ResolutionManager.cs" />
+    <Compile Include="Assets\Margot\Scripts\MusicPlayer.cs" />
     <Compile Include="Assets\Ryan\Scripts\ShootingEnemy.cs" />
     <Compile Include="Assets\Margot\Scripts\FilledImageRaycast.cs" />
     <Compile Include="Assets\Margot\Scripts\ShootingEnemy.cs" />

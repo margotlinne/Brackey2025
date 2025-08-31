@@ -104,6 +104,7 @@ namespace Margot
             if (isDeathBlock)
             {
                 SetToDeathCard();
+                
                 return;
             }
 
@@ -111,7 +112,7 @@ namespace Margot
 
             if (valueText != null)
             {
-                valueText.text = "-" + rewardValue.ToString();
+                valueText.text = rewardValue.ToString();
                 if (GameManager.Instance.rouletteManager.isWheelSpinning)
                     thisButton.gameObject.SetActive(false);
             }

@@ -443,6 +443,7 @@
 "Assets/Margot/Scripts/HealthUI.cs"
 "Assets/Margot/Scripts/HoverImage.cs"
 "Assets/Margot/Scripts/MouseAim.cs"
+"Assets/Margot/Scripts/MusicPlayer.cs"
 "Assets/Margot/Scripts/OrbitAimFollower.cs"
 "Assets/Margot/Scripts/ParticleBehaviour.cs"
 "Assets/Margot/Scripts/ParticleSpawner.cs"
