@@ -69,6 +69,7 @@ namespace Margot
                     break;
             }
 
+            // Debug.Log("[StatManager] Get " + type + "stat: " + val);
             return val;
         }
 

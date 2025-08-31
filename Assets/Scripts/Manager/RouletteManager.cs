@@ -37,7 +37,10 @@ namespace Margot
             rotateAmount = 0f;
         }
 
-        public void SetRoulette() { }
+        public void SetRoulette()
+        {
+            deckTransform.gameObject.SetActive(true);
+        }
 
         /// <summary>
         /// Add a new block to the wheel and recalculate fill and rotation for all.
@@ -61,6 +64,8 @@ namespace Margot
                     block.iconImage.sprite = rouletteBlock.sr;
                     block.baseRewardValue = block.rewardValue  = rouletteBlock.rewardValue;
                     block.type = rouletteBlock.type;
+                    block.isDeathBlock = rouletteBlock.isDeathBlock;
+                    block.increaseStat = rouletteBlock.increaseStat;
                     rouletteBlock.isSelected = true;
                     block.isPositive = rouletteBlock.isPositive;
                     block.code = rouletteBlock.code;
@@ -87,15 +92,47 @@ namespace Margot
                 }
             }
 
-            foreach (var block in blocksInWheel)
-            {
-                if (block.isPositive && block.gameObject.activeSelf)
-                {
-                    block.rewardValue += negative;
+            float positiveRatio = (wheelBlockCount > 0) ? (float)positive / wheelBlockCount : 0f;
 
-                    block.rewardValue = Mathf.Max(block.baseRewardValue, block.rewardValue - (positive - 1));
+            if (positiveRatio < 0.5f)
+            {
+                foreach (var block in blocksInWheel)
+                {
+                    if (block.isPositive && block.gameObject.activeSelf)
+                    {
+                        if (block.increaseStat)
+                        {
+                            // 증가형 긍정 블럭 → 부정 블럭 수에 따라 강화
+                            block.rewardValue += negative;
+                            block.rewardValue = Mathf.Max(block.baseRewardValue, block.rewardValue - (positive - 1));
+                        }
+                        else
+                        {
+                            // 감소형 긍정 블럭 → -1 처리, 단 1 이하로는 안내려감
+                            block.rewardValue = Mathf.Max(1, block.baseRewardValue - 1);
+                        }
+                    }
                 }
             }
+            else
+            {
+                foreach (var block in blocksInWheel)
+                {
+                    if (block.isPositive && block.gameObject.activeSelf)
+                    {
+                        if (block.increaseStat)
+                        {
+                            block.rewardValue = block.baseRewardValue;
+                        }
+                        else
+                        {
+                            block.rewardValue = Mathf.Max(1, block.baseRewardValue - 1);
+                        }
+                    }
+                }
+            }
+
+
         }
 
         /// <summary>
@@ -128,7 +165,9 @@ namespace Margot
                 blocksInWheel[i].iconImage.sprite = blocksInWheel[i + 1].iconImage.sprite;
                 blocksInWheel[i].code = blocksInWheel[i + 1].code;
                 blocksInWheel[i].type = blocksInWheel[i + 1].type;
+                blocksInWheel[i].increaseStat = blocksInWheel[i + 1].increaseStat;
                 blocksInWheel[i].isPositive = blocksInWheel[i + 1].isPositive;
+                blocksInWheel[i].isDeathBlock = blocksInWheel[i + 1].isDeathBlock;
                 blocksInWheel[i].rewardValue = blocksInWheel[i + 1].rewardValue;
                 blocksInWheel[i].gameObject.SetActive(blocksInWheel[i + 1].gameObject.activeSelf);
             }
@@ -165,6 +204,61 @@ namespace Margot
                     return;
                 }
             }
+
+            // Recalculate fill amounts and rotations for remaining blocks
+            if (wheelBlockCount > 0)
+            {
+                float fill = 1f / wheelBlockCount;
+                rotateAmount = 0f;
+
+                for (int i = 0; i < wheelBlockCount; i++)
+                {
+                    var block = blocksInWheel[i];
+                    var img = block.GetComponent<Image>();
+                    img.fillAmount = fill;
+
+                    block.transform.rotation = Quaternion.Euler(0, 0, rotateAmount);
+                    rotateAmount -= 360f * fill;
+                }
+
+                // --- [추가 부분] 보정 로직 ---
+                int positive = 0;
+                int negative = 0;
+
+                foreach (var b in blocksInWheel)
+                {
+                    if (b.gameObject.activeSelf)
+                    {
+                        if (b.isPositive) positive++;
+                        else negative++;
+                    }
+                }
+
+                float positiveRatio = (wheelBlockCount > 0) ? (float)positive / wheelBlockCount : 0f;
+
+                if (positiveRatio < 0.5f)
+                {
+                    foreach (var b in blocksInWheel)
+                    {
+                        if (b.isPositive && b.gameObject.activeSelf)
+                        {
+                            b.rewardValue = b.baseRewardValue; // 초기화
+                            b.rewardValue += negative;
+                            b.rewardValue = Mathf.Max(b.baseRewardValue, b.rewardValue - (positive - 1));
+                        }
+                    }
+                }
+                else
+                {
+                    // 긍정 비율이 50% 이상일 때는 보정 없음, base 값으로 리셋
+                    foreach (var b in blocksInWheel)
+                    {
+                        if (b.isPositive && b.gameObject.activeSelf)
+                            b.rewardValue = b.baseRewardValue;
+                    }
+                }
+            }
+
         }
 
         public void SpinRouletteButton()
@@ -179,6 +273,12 @@ namespace Margot
                         positiveCount++;
                 }
 
+                if (positiveCount == 0)
+                {
+                    Debug.Log("[RouletteManager] Spin blocked: all blocks are negative.");
+                    return;
+                }
+
                 if (positiveCount <= wheelBlockCount / 2)
                 {
                     StartCoroutine(SpinRoulette());
@@ -189,6 +289,10 @@ namespace Margot
                 }
             }
         }
+
+
+
+
 
         IEnumerator SpinRoulette()
         {
@@ -221,7 +325,7 @@ namespace Margot
                     if (localZ > 180f) localZ -= 360f;
 
                     float angle = localZ + wheelZ;
-                    if (angle > 180f) angle -= 360f; // [-180,180) 범위로 보정
+                    if (angle > 180f) angle -= 360f; 
                     angles[i] = angle;
 
                     Debug.Log(i + " " + angle);
@@ -231,7 +335,6 @@ namespace Margot
                 float minAbove = 9999f;
                 float maxBelow = -9999f;
 
-                // -180보다 큰 블록 중 가장 작은 값
                 for (int i = 0; i < wheelBlockCount; i++)
                 {
                     if (angles[i] > -180f && angles[i] < minAbove)
@@ -241,7 +344,6 @@ namespace Margot
                     }
                 }
 
-                // 없으면 -180 이하 중 가장 큰 값
                 if (chosenIndex == -1)
                 {
                     for (int i = 0; i < wheelBlockCount; i++)
@@ -267,7 +369,8 @@ namespace Margot
 
             isWheelSpinning = false;
             yield return new WaitForSeconds(3f);
-            GameManager.Instance.waveManager.NewWave();
+            if (selectedBlock.sr != selectedBlock.deathIcon) GameManager.Instance.waveManager.NewWave();
+            else GameManager.Instance.uiManager.OpenCanvas(UIManager.CanvasType.gameover);
         }
 
 

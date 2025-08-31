@@ -149,10 +149,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   rewardValue: 1
+  baseRewardValue: 0
+  increaseStat: 0
   isPositive: 0
   isSelected: 0
   code: 0
+  notAvailable: 0
   iconImage: {fileID: 6294656258277426957}
+  deathIcon: {fileID: 21300000, guid: 7f188e65c9c173e42adff7c76b9a3412, type: 3}
   posColour: {r: 1, g: 0.9647059, b: 0.5058824, a: 1}
   negColour: {r: 0.84313726, g: 0.63529414, b: 1, a: 1}
   sr: {fileID: 0}
