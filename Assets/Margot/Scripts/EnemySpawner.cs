@@ -5,7 +5,7 @@ using UnityEngine.UI; // Image, Graphic
 
 namespace Margot
 {
-    public class EnemySpawner : MonoBehaviour
+    public class EnemySpawner : Sounds
     {
         public GameObject[] enemyPrefabs;
         public List<GameObject> spawnedEnemies = new List<GameObject>();
@@ -73,6 +73,7 @@ namespace Margot
 
             spawnedEnemies.Add(enemy);
             totalCount++;
+            PlaySound(1);
             return enemy;
         }
 
@@ -107,6 +108,7 @@ namespace Margot
            
             // wait
             yield return new WaitForSeconds(seconds);
+            PlaySound(0);
 
             // Enable attack
             if (enemyComp != null)

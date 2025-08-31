@@ -8,6 +8,8 @@ namespace Margot
     public class Enemy : MonoBehaviour
     {
         public enum EnemyType { Chase, Run, Shoot };
+        public AudioSource audioSource;
+        public AudioClip clip;
 
         [Header("Info")]
         public EnemyType enemyType;
@@ -174,6 +176,9 @@ namespace Margot
             {
                 Debug.Log("[Enemy] " + enemyType.ToString() + " type enemy got hit");
                 currentHealth -= player.GetComponent<Player>().attackDamage;
+                audioSource.clip = clip;
+                audioSource.Play();
+
                 anim.SetTrigger("GettingHit");
 
                 if (currentHealth <= 0f) Dead(false);
