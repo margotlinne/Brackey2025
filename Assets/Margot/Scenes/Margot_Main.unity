@@ -624,12 +624,13 @@ MonoBehaviour:
   m_text: '- Put at least 2 blocks.
 
 
-    - Buff blocks cannot be more than half.
+    - Buff blocks cannot be more than half
+    and there should be at least one.
 
 
-    -
-    If the debuff value falls below the minimum threshold, some blocks will be deactivated,
-    and others will turn into instant-death blocks.'
+    - If the debuff value falls below the
+    minimum threshold, some blocks will be deactivated, and others will turn into
+    instant-death blocks.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d769260e0f4d3754595bd937e9f80994, type: 2}
   m_sharedMaterial: {fileID: 2009015360864738047, guid: d769260e0f4d3754595bd937e9f80994, type: 2}
