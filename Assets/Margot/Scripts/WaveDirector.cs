@@ -140,8 +140,8 @@ namespace Margot
         {
             Vector3 wt = GetTypeWeights(w); // x=Runner, y=Chaser, z=Shooting
             float r = Random.value;
-            if (r < wt.x) return "ShootEnemy";
-            //if (r < wt.x) return "RunEnemy";
+            //if (r < wt.x) return "ShootEnemy";
+            if (r < wt.x) return "RunEnemy";
             if (r < wt.x + wt.y) return "ChaseEnemy";
             return "ShootEnemy";
         }

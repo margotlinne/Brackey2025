@@ -69,19 +69,28 @@ namespace Margot
             }       
         }
 
-        IEnumerator DetectAttacked(float damage)
-        {
-            Debug.Log("[Player] player got hit");
-            currentHealth -= damage;
-            audioSource.clip = clip;
-            audioSource.Play();
+     IEnumerator DetectAttacked(float damage)
+{
+    Debug.Log("[Player] player got hit");
+    currentHealth -= damage;
 
-            if (currentHealth <= 0) Dead();
+    // Play hit animation
+    GetComponent<Animator>().SetTrigger("GettingHit");
 
-            yield return new WaitForSeconds(0.3f);
-            detectAttackedCoroutine = null;
-            yield break;
-        }
+    // Play hit sound
+    if (audioSource != null && clip != null)
+    {
+        audioSource.clip = clip;
+        audioSource.Play();
+    }
+
+    if (currentHealth <= 0) Dead();
+
+    yield return new WaitForSeconds(0.3f);
+    detectAttackedCoroutine = null;
+    yield break;
+}
+
 
 
 

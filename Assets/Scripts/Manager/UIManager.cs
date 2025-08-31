@@ -27,6 +27,7 @@ namespace Margot
 
         [Header("UI")]
         public GameTimer gameTimer;
+        public GameObject helpImage;
 
         private List<GameObject> canvasLists = new List<GameObject>();
 
@@ -49,6 +50,11 @@ namespace Margot
             waveText.text = "Wave " + GameManager.Instance.waveManager.currentWave.ToString();
         }
 
+        public void HelpButton()
+        {
+            helpImage.SetActive(!helpImage.activeSelf);
+        }
+        
         public void UpdateStatUIText()
         { 
            e_damageText.text = GameManager.Instance.statManager.enemyStat.attackDamage.ToString(); 
@@ -76,6 +82,7 @@ namespace Margot
                             canvas.SetActive(false);
                     }
                     isCanvasOn = true;
+                    GameManager.Instance.rouletteManager.SetRoulette();
                     break;
                 case CanvasType.gameover:
                     foreach (var canvas in canvasLists)

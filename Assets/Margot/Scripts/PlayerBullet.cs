@@ -16,6 +16,7 @@ namespace Margot
             if (collision.gameObject.layer == 6 && collision.gameObject.GetComponent<Enemy>().canAttack) // enemy layer
             {
                 Debug.Log("[BulletBehaviour] player bullet collided with enemy");
+                GameManager.Instance.shaking.Shake();
                 ReturnBullet();
                 collision.GetComponent<Enemy>().GettingHit();
                 audioSource.clip = clip;
