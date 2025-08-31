@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
 
     public bool isGameOver = false;
     public WorldShaking shaking;
+    public int enemyKillCount = 0;
 
     void Awake()
     {
@@ -48,6 +49,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene(0);
+        rouletteManager.PlaySound(3);
+        SceneManager.LoadScene(1);
     }
 }

@@ -12,6 +12,7 @@ namespace Margot
     {
         public List<RouletteBlock> rouletteBlocks = new List<RouletteBlock>();
         public GameObject spinButtonObj;
+        public GameObject helpButtonObj;
         public Transform wheel;
         public Transform deckTransform;
         public RouletteBlock[] blocksInWheel;  // Slots in the wheel
@@ -41,6 +42,7 @@ namespace Margot
         public void SetRoulette()
         {
             deckTransform.gameObject.SetActive(true);
+            helpButtonObj.SetActive(true);
             spinButtonObj.SetActive(true);
         }
 
@@ -263,6 +265,7 @@ namespace Margot
 
         public void SpinRouletteButton()
         {
+            PlaySound(3);
             if (wheelBlockCount > 1)
             {
                 int positiveCount = 0;
@@ -297,6 +300,7 @@ namespace Margot
         IEnumerator SpinRoulette()
         {
             PlaySound(2);
+            helpButtonObj.SetActive(false);
             spinButtonObj.SetActive(false);
             isWheelSpinning = true;
             deckTransform.gameObject.SetActive(false);

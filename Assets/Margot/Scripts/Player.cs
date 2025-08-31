@@ -32,6 +32,7 @@ namespace Margot
 
         private void Start()
         {
+            maxHealth = GameManager.Instance.statManager.playerStat.maxHealth;
             currentHealth = maxHealth;
         }
 

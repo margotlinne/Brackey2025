@@ -178,6 +178,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80875b347fcf5b242900de8452ecc0cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sounds:
+  - {fileID: 8300000, guid: bccdd461af1999f4fa1d9ae74d095af7, type: 3}
+  - {fileID: 8300000, guid: 8293e5e31844aab4d930d063db90e1c6, type: 3}
+  randSound: []
   block: {fileID: 4164772174173833718}
 --- !u!1 &3997761165553118157
 GameObject:

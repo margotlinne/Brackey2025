@@ -150,6 +150,7 @@ namespace Margot
         public void Dead(bool gameover)
         {
             PlaySound(0);
+            GameManager.Instance.enemyKillCount++;
             Debug.Log("[Enemy] Dead");
             currentHealth = maxHealth;
 

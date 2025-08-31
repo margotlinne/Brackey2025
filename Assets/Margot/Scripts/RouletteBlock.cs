@@ -49,22 +49,27 @@ namespace Margot
         {
             notAvailable = false;
 
-            // WheelBlockÀº °Ç³Ê¶Ù±â
             if (valueText != null) return;
 
             if (increaseStat)
             {
-                rewardValue = GameManager.Instance.statManager.GetCurrentStat(type) + 1;
+                int currentVal = GameManager.Instance.statManager.GetCurrentStat(type);
+
+                if (type == StatManager.StatType.p_health && currentVal >= 50)
+                {
+                    notAvailable = true;
+                    rewardValue = 0;
+                }
+                else
+                {
+                    rewardValue = currentVal + 1;
+                }
             }
             else
             {
                 int currentVal = GameManager.Instance.statManager.GetCurrentStat(type);
 
-                if (currentVal - 1 > 0)
-                {
-                    rewardValue = currentVal - 1;
-                }
-                else
+                if (currentVal - 1 <= 0)
                 {
                     if (type == StatManager.StatType.p_health || type == StatManager.StatType.p_attackDamage)
                     {
@@ -74,13 +79,18 @@ namespace Margot
                         rewardValue = 0;
                         if (valueText != null) valueText.text = "";
                     }
-                    else if (type == StatManager.StatType.e_health)
+                    else
                     {
                         notAvailable = true;
                         rewardValue = 0;
                     }
                 }
+                else
+                {
+                    rewardValue = currentVal - 1;
+                }
             }
+
 
             baseRewardValue = rewardValue;
         }

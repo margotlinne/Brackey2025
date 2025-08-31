@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace Margot
 {
-    public class HoverImage : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class HoverImage : SoundPlayer, IPointerEnterHandler, IPointerExitHandler
     {
         public Transform block;  
         private Vector3 originalPos;
@@ -11,6 +11,7 @@ namespace Margot
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            PlaySound(0, 0.5f);
             if (block == null || isHovered) return;
 
             isHovered = true;
@@ -25,6 +26,7 @@ namespace Margot
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            PlaySound(1, 0.5f);
             if (block == null || !isHovered) return;
 
             isHovered = false;

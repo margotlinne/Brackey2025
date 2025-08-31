@@ -11,6 +11,7 @@ namespace Margot
 
         [Header("Text")]
         public TextMeshProUGUI waveText;
+        public TextMeshProUGUI killCountText;
         public TextMeshProUGUI e_damageText;
         public TextMeshProUGUI e_dmSpeedText;
         public TextMeshProUGUI e_healthText;
@@ -48,10 +49,12 @@ namespace Margot
         void Update()
         {
             waveText.text = "Wave " + GameManager.Instance.waveManager.currentWave.ToString();
+            killCountText.text = "Kills " + GameManager.Instance.enemyKillCount.ToString(); 
         }
 
         public void HelpButton()
         {
+            GameManager.Instance.rouletteManager.PlaySound(3);
             helpImage.SetActive(!helpImage.activeSelf);
         }
         

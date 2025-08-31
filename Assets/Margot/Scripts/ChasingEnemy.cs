@@ -48,7 +48,7 @@ namespace Margot
         {
             base.Update();
 
-            if (animationCoroutine == null)
+            if (animationCoroutine == null && gameObject.activeSelf)
             {
                 animationCoroutine = StartCoroutine(AnimateSprites());
             }
