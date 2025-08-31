@@ -8,42 +8,60 @@
     <link rel="stylesheet" href="<<<TemplateData/diagnostics.css>>>">
     <script src="<<<TemplateData/diagnostics.js>>>"></script>
 #endif
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        border: 0;
-        text-align: center;
-        background-color: #111111; /* 블랙에 가까운 배경색 */
-      }
-      #unity-loading-bar {
-        width: 40%;
-        height: 20px;
-        background: rgba(255, 255, 255, 0.1);
-        margin: auto;
-        position: absolute;
-        top: 50%;
-        left: 0;
-        right: 0;
-        transform: translateY(-50%);
-        border-radius: 10px;
-        overflow: hidden;
-      }
-      #unity-progress-bar-full {
-        height: 100%;
-        width: 0%;
-        background-color: #468986; /* 로딩 바 색상 */
-        transition: width 0.3s;
-      }
-    </style>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: #111111; /* 블랙에 가까운 배경색 */
+    width: 100vw;
+    height: 100vh;
+  }
+
+  /* 캔버스와 로딩바를 함께 담는 컨테이너 */
+  #unity-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  #unity-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  #unity-loading-bar {
+    width: 40%;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+
+    /* 게임 화면(캔버스) 안 정중앙 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  #unity-progress-bar-full {
+    height: 100%;
+    width: 0%;
+    background-color: #468986; /* 로딩 바 색상 */
+    transition: width 0.3s;
+  }
+</style>
   </head>
   <body>
-    <canvas id="unity-canvas" width={{{ WIDTH }}} height={{{ HEIGHT }}} tabindex="-1" 
-      style="width: {{{ WIDTH }}}px; height: {{{ HEIGHT }}}px; background: {{{ BACKGROUND_FILENAME ? 'url(\'Build/' + BACKGROUND_FILENAME.replace(/'/g, '%27') + '\') center / cover' : BACKGROUND_COLOR }}}">
-    </canvas>
+    <div id="unity-container">
+      <canvas id="unity-canvas" width={{{ WIDTH }}} height={{{ HEIGHT }}} tabindex="-1"
+        style="background: {{{ BACKGROUND_FILENAME ? 'url(\'Build/' + BACKGROUND_FILENAME.replace(/'/g, '%27') + '\') center / cover' : BACKGROUND_COLOR }}};">
+      </canvas>
 
-    <div id="unity-loading-bar">
-      <div id="unity-progress-bar-full"></div>
+      <div id="unity-loading-bar">
+        <div id="unity-progress-bar-full"></div>
+      </div>
     </div>
 
 #if SHOW_DIAGNOSTICS
@@ -64,8 +82,6 @@
         canvas.style.width = "100%";
         canvas.style.height = "100%";
         canvas.style.position = "fixed";
-
-        document.body.style.textAlign = "left";
 
 #if SHOW_DIAGNOSTICS
         // diagnostics icon reposition

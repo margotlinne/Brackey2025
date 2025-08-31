@@ -4,19 +4,18 @@ namespace Margot
 {
     public class ResolutionManager : MonoBehaviour
     {
-        public RectTransform background;   // Background image (fixed 16:9 ratio)
-        public RectTransform[] uiElements; // UI elements to be scaled
-        public Transform[] worldObjects;   // World objects to be scaled
+        public RectTransform background;
+        public RectTransform[] uiElements;
+        public Transform[] worldObjects;
 
         private int baseWidth;
         private int baseHeight;
 
-        private Vector3[] uiBaseScales;
+        private Vector2[] uiBaseSizes;
         private Vector3[] worldBaseScales;
 
-        private float targetAspect = 16f / 9f; // Fixed aspect ratio (16:9)
+        private float targetAspect = 16f / 9f;
 
-        // Uniform scale ratio (kept for other scripts to read)
         public Vector3 ScaleRatio { get; private set; } = Vector3.one;
 
         void Start()
@@ -24,12 +23,10 @@ namespace Margot
             baseWidth = Screen.width;
             baseHeight = Screen.height;
 
-            // Save original scales of UI elements
-            uiBaseScales = new Vector3[uiElements.Length];
+            uiBaseSizes = new Vector2[uiElements.Length];
             for (int i = 0; i < uiElements.Length; i++)
-                uiBaseScales[i] = uiElements[i].localScale;
+                uiBaseSizes[i] = uiElements[i].sizeDelta;
 
-            // Save original scales of world objects
             worldBaseScales = new Vector3[worldObjects.Length];
             for (int i = 0; i < worldObjects.Length; i++)
                 worldBaseScales[i] = worldObjects[i].localScale;
@@ -40,27 +37,15 @@ namespace Margot
             float baseAspect = (float)baseWidth / baseHeight;
             float currentAspect = (float)Screen.width / Screen.height;
 
-            float scale;
+            float scale = currentAspect < targetAspect
+                ? (float)Screen.width / baseWidth
+                : (float)Screen.height / baseHeight;
 
-            if (currentAspect < targetAspect)
-            {
-                // Taller screen ¡æ use width ratio
-                scale = (float)Screen.width / baseWidth;
-            }
-            else
-            {
-                // Wider screen ¡æ use height ratio
-                scale = (float)Screen.height / baseHeight;
-            }
-
-            // Apply uniform scale (same for x and y)
             ScaleRatio = new Vector3(scale, scale, 1f);
 
-            // Apply ratio to UI elements
             for (int i = 0; i < uiElements.Length; i++)
-                uiElements[i].localScale = Vector3.Scale(uiBaseScales[i], ScaleRatio);
+                uiElements[i].sizeDelta = uiBaseSizes[i] * scale;
 
-            // Apply ratio to world objects
             for (int i = 0; i < worldObjects.Length; i++)
                 worldObjects[i].localScale = Vector3.Scale(worldBaseScales[i], ScaleRatio);
         }

@@ -11,7 +11,7 @@ namespace Margot
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            PlaySound(0, 0.5f);
+            PlaySound(0, 0.2f);
             if (block == null || isHovered) return;
 
             isHovered = true;
@@ -26,7 +26,7 @@ namespace Margot
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            PlaySound(1, 0.5f);
+            PlaySound(1, 0.2f);
             if (block == null || !isHovered) return;
 
             isHovered = false;
