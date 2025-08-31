@@ -111,7 +111,8 @@ namespace Margot
 
             if (valueText != null)
             {
-                valueText.text = rewardValue.ToString();
+                if (increaseStat) valueText.text = "+" + rewardValue.ToString();
+                else valueText.text = "-" + rewardValue.ToString();
                 if (GameManager.Instance.rouletteManager.isWheelSpinning)
                     thisButton.gameObject.SetActive(false);
             }

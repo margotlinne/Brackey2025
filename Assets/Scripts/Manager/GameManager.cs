@@ -15,8 +15,9 @@ public class GameManager : MonoBehaviour
     public ResolutionManager resolutionManager;
     public RouletteManager rouletteManager;
 
-    [Header("Core")]
+
     public bool isGameOver = false;
+    public WorldShaking shaking;
 
     void Awake()
     {

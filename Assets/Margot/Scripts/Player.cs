@@ -71,6 +71,7 @@ namespace Margot
         {
             Debug.Log("[Player] player got hit");
             currentHealth -= damage;
+            GetComponent<Animator>().SetTrigger("GettingHit");
 
             if (currentHealth <= 0) Dead();
 
