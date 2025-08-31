@@ -102,8 +102,8 @@
     <Compile Include="Assets\Margot\Scripts\SoundClip.cs" />
     <Compile Include="Assets\Margot\Scripts\EnemyBullet.cs" />
     <Compile Include="Assets\Scripts\Manager\StatManager.cs" />
-    <Compile Include="Assets\Margot\Scripts\PlayerBullet.cs" />
     <Compile Include="Assets\Margot\Scripts\AspectRatioEnforcer.cs" />
+    <Compile Include="Assets\Margot\Scripts\PlayerBullet.cs" />
     <Compile Include="Assets\Margot\Scripts\HealthUI.cs" />
     <Compile Include="Assets\Margot\Scripts\Enemy.cs" />
     <Compile Include="Assets\Margot\Scripts\ChasingEnemy.cs" />

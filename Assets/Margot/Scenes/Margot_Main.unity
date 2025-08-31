@@ -2962,7 +2962,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Hlep
+  m_text: Help
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d769260e0f4d3754595bd937e9f80994, type: 2}
   m_sharedMaterial: {fileID: 2009015360864738047, guid: d769260e0f4d3754595bd937e9f80994, type: 2}
