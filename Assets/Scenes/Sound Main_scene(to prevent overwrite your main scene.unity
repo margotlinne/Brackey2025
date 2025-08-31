@@ -1804,6 +1804,7 @@ MonoBehaviour:
   gameOverCanvas: {fileID: 1916341301}
   isCanvasOn: 0
   gameTimer: {fileID: 1677013569}
+  helpImage: {fileID: 0}
 --- !u!4 &349143802
 Transform:
   m_ObjectHideFlags: 0
@@ -1986,8 +1987,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 382407799}
-  - component: {fileID: 382407798}
   - component: {fileID: 382407800}
+  - component: {fileID: 382407801}
   m_Layer: 0
   m_Name: RouletteManager
   m_TagString: Untagged
@@ -1995,54 +1996,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &382407798
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 382407797}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86e8aa8bf3ca6164fb2b2089697df9fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sounds:
-  - {fileID: 8300000, guid: 85f9d6e28dc1498418280237f82aba75, type: 3}
-  - {fileID: 8300000, guid: dee34efcf087ceb48bfda4ef653e1cb9, type: 3}
-  randSound: []
-  rouletteBlocks:
-  - {fileID: 3720668839014146743}
-  - {fileID: 1933960803}
-  - {fileID: 1369905488}
-  - {fileID: 717981777}
-  - {fileID: 1380464981}
-  - {fileID: 1751733551}
-  - {fileID: 826887132}
-  - {fileID: 666626072}
-  - {fileID: 1670066700}
-  - {fileID: 2100595136}
-  - {fileID: 1258001387}
-  - {fileID: 1982224978}
-  - {fileID: 2009939354}
-  - {fileID: 744711012}
-  - {fileID: 77012696}
-  - {fileID: 972489653}
-  wheel: {fileID: 1626904533}
-  deckTransform: {fileID: 236659614}
-  blocksInWheel:
-  - {fileID: 1613279974}
-  - {fileID: 1110646167}
-  - {fileID: 547186535}
-  - {fileID: 1531360086}
-  - {fileID: 865208092}
-  - {fileID: 857352901}
-  - {fileID: 895082298}
-  - {fileID: 30223914}
-  - {fileID: 659876765}
-  - {fileID: 829879932}
-  wheelBlockCount: 0
-  isWheelSpinning: 0
 --- !u!4 &382407799
 Transform:
   m_ObjectHideFlags: 0
@@ -2155,6 +2108,52 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &382407801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 382407797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0ee57bc678df5841847666e10d16ef6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds: []
+  randSound: []
+  rouletteBlocks:
+  - {fileID: 3720668839014146743}
+  - {fileID: 1933960803}
+  - {fileID: 1369905488}
+  - {fileID: 717981777}
+  - {fileID: 1380464981}
+  - {fileID: 1751733551}
+  - {fileID: 826887132}
+  - {fileID: 666626072}
+  - {fileID: 1670066700}
+  - {fileID: 2100595136}
+  - {fileID: 1258001387}
+  - {fileID: 1982224978}
+  - {fileID: 2009939354}
+  - {fileID: 744711012}
+  - {fileID: 77012696}
+  - {fileID: 972489653}
+  wheel: {fileID: 1626904533}
+  deckTransform: {fileID: 236659614}
+  blocksInWheel:
+  - {fileID: 1613279974}
+  - {fileID: 1110646167}
+  - {fileID: 547186535}
+  - {fileID: 1531360086}
+  - {fileID: 865208092}
+  - {fileID: 857352901}
+  - {fileID: 895082298}
+  - {fileID: 30223914}
+  - {fileID: 659876765}
+  - {fileID: 829879932}
+  wheelBlockCount: 0
+  isWheelSpinning: 0
 --- !u!1001 &385581372
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2470,7 +2469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ea0c06831506434f9503580e9040991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawner: {fileID: 1326045459}
+  spawner: {fileID: 0}
   startTotal: 12
   totalGrowth: 1.2
   minBatch: 3
@@ -2525,7 +2524,7 @@ MonoBehaviour:
   clip: {fileID: 8300000, guid: 1ee6c3f6681b0de46a7eae7376de4c88, type: 3}
   currentWave: 0
   isWaveDone: 1
-  enemySpawner: {fileID: 1326045459}
+  enemySpawner: {fileID: 0}
   waveCountdown: {fileID: 39172599}
   waveDirector: {fileID: 412339987}
 --- !u!4 &418588295
@@ -3029,7 +3028,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 103f4144b66b0e740b5086a48385086e, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 103f4144b66b0e740b5086a48385086e, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.202
@@ -6327,7 +6326,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ec928e75cbc211a4081e32b70602e494, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: ec928e75cbc211a4081e32b70602e494, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.689
@@ -7068,7 +7067,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 382407798}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Margot.RouletteManager, Assembly-CSharp
         m_MethodName: SpinRouletteButton
         m_Mode: 1
@@ -7276,8 +7275,9 @@ MonoBehaviour:
   waveManager: {fileID: 418588294}
   statManager: {fileID: 2097648969}
   resolutionManager: {fileID: 793685136}
-  rouletteManager: {fileID: 382407798}
+  rouletteManager: {fileID: 0}
   isGameOver: 0
+  shaking: {fileID: 0}
 --- !u!1 &1135500801
 GameObject:
   m_ObjectHideFlags: 0
@@ -7368,9 +7368,10 @@ GameObject:
   - component: {fileID: 1165324707}
   - component: {fileID: 1165324710}
   - component: {fileID: 1165324706}
-  - component: {fileID: 1165324708}
   - component: {fileID: 1165324709}
   - component: {fileID: 1165324711}
+  - component: {fileID: 1165324712}
+  - component: {fileID: 1165324713}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -7425,7 +7426,7 @@ MonoBehaviour:
     m_ActionName: 'Player/Look[/Mouse/delta,/Touchscreen/delta]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1165324708}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Margot.PlayerAttack, Assembly-CSharp
         m_MethodName: OnAttack
         m_Mode: 0
@@ -7560,7 +7561,7 @@ SpriteRenderer:
   m_Size: {x: 1.97, y: 1.95}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1165324702
@@ -7667,24 +7668,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.27, y: 0.75}
   m_EdgeRadius: 0
---- !u!114 &1165324708
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1165324696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03ffea71b9e7672478edce535ad61e24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sounds:
-  - {fileID: 8300000, guid: 5e85ec23d7072244094bf11187147d93, type: 3}
-  randSound: []
-  firePoint: {fileID: 888536317}
-  bulletForce: 50
-  canShoot: 0
 --- !u!114 &1165324709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7719,22 +7702,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc462783e1869d943b8e64d51069bea3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  up:
-  - {fileID: 371539243, guid: fd54361efaebc90489ba83abd2b6e28b, type: 3}
-  down:
-  - {fileID: 758444599, guid: fd54361efaebc90489ba83abd2b6e28b, type: 3}
-  left:
-  - {fileID: 182160472, guid: fd54361efaebc90489ba83abd2b6e28b, type: 3}
-  right:
-  - {fileID: -1208202842, guid: fd54361efaebc90489ba83abd2b6e28b, type: 3}
-  upRight:
-  - {fileID: 1075936564, guid: fd54361efaebc90489ba83abd2b6e28b, type: 3}
-  upLeft:
-  - {fileID: -476316109, guid: fd54361efaebc90489ba83abd2b6e28b, type: 3}
-  downRight:
-  - {fileID: 1798903429, guid: fd54361efaebc90489ba83abd2b6e28b, type: 3}
-  downLeft:
-  - {fileID: 1279347883, guid: fd54361efaebc90489ba83abd2b6e28b, type: 3}
 --- !u!82 &1165324711
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7832,6 +7799,45 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &1165324712
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165324696}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1165324713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165324696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96d5c5eeae9b34247a9174f357e5928a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds: []
+  randSound: []
+  firePoint: {fileID: 888536317}
+  bulletForce: 50
+  canShoot: 0
 --- !u!1 &1219321477
 GameObject:
   m_ObjectHideFlags: 0
@@ -8605,8 +8611,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1326045460}
-  - component: {fileID: 1326045459}
   - component: {fileID: 1326045461}
+  - component: {fileID: 1326045462}
   m_Layer: 0
   m_Name: EnemySpawner
   m_TagString: Untagged
@@ -8614,30 +8620,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1326045459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1326045458}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c9b23510b43c8f4194c38331febdf03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sounds:
-  - {fileID: 8300000, guid: ef02c4d458daa9242975c90ec32b2373, type: 3}
-  - {fileID: 8300000, guid: fccf9489953c05a4a97bbbce1d57b9a0, type: 3}
-  randSound: []
-  enemyPrefabs:
-  - {fileID: 4906698342402202672, guid: e205d4ddedd0e1849a2060777249cfd4, type: 3}
-  - {fileID: 4444727547812035601, guid: e2a0b03a0480e3241903dab17570f571, type: 3}
-  - {fileID: 9109822917302711066, guid: 4cd4e0e3986ac4c47a0836c17de75655, type: 3}
-  spawnedEnemies: []
-  spawnArea: {fileID: 1321161634}
-  targetTotalThisWave: 0
-  warmupSeconds: 2
 --- !u!4 &1326045460
 Transform:
   m_ObjectHideFlags: 0
@@ -8750,6 +8732,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1326045462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326045458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75008824fb2c72e438889604bfecffe0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds: []
+  randSound: []
+  enemyPrefabs:
+  - {fileID: 4906698342402202672, guid: e205d4ddedd0e1849a2060777249cfd4, type: 3}
+  - {fileID: 4444727547812035601, guid: e2a0b03a0480e3241903dab17570f571, type: 3}
+  - {fileID: 9109822917302711066, guid: 4cd4e0e3986ac4c47a0836c17de75655, type: 3}
+  spawnedEnemies: []
+  spawnArea: {fileID: 1321161634}
+  targetTotalThisWave: 0
+  warmupSeconds: 2
 --- !u!1 &1355261737
 GameObject:
   m_ObjectHideFlags: 0

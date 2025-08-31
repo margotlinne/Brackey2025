@@ -8,7 +8,7 @@ using static Unity.Collections.AllocatorManager;
 
 namespace Margot
 {
-    public class RouletteManager : Sounds
+    public class RouletteManager : MonoBehaviour
     {
         public List<RouletteBlock> rouletteBlocks = new List<RouletteBlock>();
         public Transform wheel;
@@ -57,7 +57,7 @@ namespace Margot
             {
                 var block = blocksInWheel[i];
                 block.gameObject.SetActive(true);
-                PlaySound(1);
+                //PlaySound(1);
 
                 // Last inserted block gets the sprite
                 if (i == wheelBlockCount - 1)
@@ -150,7 +150,7 @@ namespace Margot
                 if (blocksInWheel[i].code == rouletteBlock.code)
                 {
                     indexToRemove = i;
-                    PlaySound(0);
+                    //PlaySound(0);
                     break;
                 }
             }
