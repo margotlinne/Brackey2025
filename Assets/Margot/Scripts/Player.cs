@@ -45,19 +45,20 @@ namespace Margot
 
             if (GameManager.Instance.isGameOver) Dead();
 
-            if (currentHealth == 1)
-            {
-                if (!animPlayed)
-                {
-                    lowHealthUIAnim.gameObject.SetActive(true);
-                    lowHealthUIAnim.Play();
-                    animPlayed = true;
-                }
-            }
-            else
-            {
-                lowHealthUIAnim.gameObject.SetActive(false);
-            }
+            // !
+            //if (currentHealth == 1)
+            //{
+            //    if (!animPlayed)
+            //    {
+            //        lowHealthUIAnim.gameObject.SetActive(true);
+            //        lowHealthUIAnim.Play();
+            //        animPlayed = true;
+            //    }
+            //}
+            //else
+            //{
+            //    lowHealthUIAnim.gameObject.SetActive(false);
+            //}
         }
 
         public void UpdateStat(bool updateCurrentHealth)
