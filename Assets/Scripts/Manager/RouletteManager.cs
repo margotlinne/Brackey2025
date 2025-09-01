@@ -64,8 +64,8 @@ namespace Margot
                 if (i == wheelBlockCount - 1)
                 {
                     block.iconImage.sprite = rouletteBlock.sr;
-                    block.baseRewardValue =  rouletteBlock.rewardValue;
-                    block.rewardValue = rouletteBlock.rewardValue;
+                    block.baseRewardValue =  rouletteBlock.baseRewardValue;
+                    block.rewardValue = rouletteBlock.baseRewardValue;
                     block.type = rouletteBlock.type;
                     block.isDeathBlock = rouletteBlock.isDeathBlock;
                     block.increaseStat = rouletteBlock.increaseStat;
@@ -112,6 +112,17 @@ namespace Margot
                 return;
             }
 
+            // Mark the original block as unselected in master list
+            foreach (var block in rouletteBlocks)
+            {
+                if (block.code == rouletteBlock.code)
+                {
+                    Debug.Log("[RouletteManager] Return " + rouletteBlock.code + " block");
+                    block.isSelected = false;
+                    break;
+                }
+            }
+
             // Shift blocks left to fill the empty slot
             for (int i = indexToRemove; i < wheelBlockCount - 1; i++)
             {
@@ -122,6 +133,7 @@ namespace Margot
                 blocksInWheel[i].isPositive = blocksInWheel[i + 1].isPositive;
                 blocksInWheel[i].isDeathBlock = blocksInWheel[i + 1].isDeathBlock;
                 blocksInWheel[i].rewardValue = blocksInWheel[i + 1].rewardValue;
+                blocksInWheel[i].baseRewardValue = blocksInWheel[i + 1].baseRewardValue;
                 blocksInWheel[i].gameObject.SetActive(blocksInWheel[i + 1].gameObject.activeSelf);
             }
 
@@ -147,16 +159,7 @@ namespace Margot
                     rotateAmount -= 360f * fill;
                 }
             }
-            // Mark the original block as unselected in master list
-            foreach (var block in rouletteBlocks)
-            {
-                if (block.code == rouletteBlock.code)
-                {
-                    Debug.Log("[RouletteManager] Return " + rouletteBlock.code + " block");
-                    block.isSelected = false;
-                    break;
-                }
-            }
+     
 
             // Recalculate fill amounts and rotations for remaining blocks
             if (wheelBlockCount > 0)
@@ -213,38 +216,32 @@ namespace Margot
         }
         private void RecalculateRewards()
         {
-            int positive = 0;
             int negative = 0;
 
             foreach (var b in blocksInWheel)
             {
-                if (b.gameObject.activeSelf)
-                {
-                    if (b.isPositive) positive++;
-                    else negative++;
-                }
+                if (b.gameObject.activeSelf && !b.isPositive)
+                    negative++;
             }
 
             foreach (var b in blocksInWheel)
             {
                 if (b.isPositive && b.gameObject.activeSelf)
                 {
-                    int value = b.baseRewardValue;
+                    int value;
 
                     if (b.increaseStat)
-                    {
                         value = b.baseRewardValue + Mathf.Max(0, negative - 1);
-                    }
                     else
-                    {
                         value = Mathf.Max(1, b.baseRewardValue - Mathf.Max(0, negative - 1));
-                    }
 
                     b.rewardValue = value;
+
                     Debug.Log($"[RecalculateRewards] code={b.code}, base={b.baseRewardValue}, neg={negative}, reward={value}");
                 }
             }
         }
+
 
 
 
