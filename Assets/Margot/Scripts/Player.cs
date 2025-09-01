@@ -62,31 +62,33 @@ namespace Margot
         }
 
         public void UpdateStat(bool updateCurrentHealth)
+{
+    Debug.Log("[Player] Update player stat");
+
+    moveSpeed = GameManager.Instance.statManager.playerStat.moveSpeed;
+    attackSpeedSPS = PlayerAttackInterval(GameManager.Instance.statManager.playerStat.attackSpeedSPS);
+    attackDamage = GameManager.Instance.statManager.playerStat.attackDamage;
+
+    float prevMax = maxHealth;
+    maxHealth = GameManager.Instance.statManager.playerStat.maxHealth;
+
+    if (updateCurrentHealth)
+    {
+        if (prevMax > maxHealth) 
         {
-            Debug.Log("[Player] Update player stat");
-
-            moveSpeed = GameManager.Instance.statManager.playerStat.moveSpeed;
-            attackSpeedSPS = PlayerAttackInterval(GameManager.Instance.statManager.playerStat.attackSpeedSPS);
-            attackDamage = GameManager.Instance.statManager.playerStat.attackDamage;
-            float prevMax = maxHealth;
-            maxHealth = GameManager.Instance.statManager.playerStat.maxHealth;
-            if (updateCurrentHealth)
-            {
-                if (prevMax > maxHealth)
-                {
-                    if (currentHealth > maxHealth)
-                        currentHealth = maxHealth;
-                }
-                else 
-                {
-                    currentHealth = maxHealth;
-                }
-            }
-
-
-            bulletPerShot = GameManager.Instance.statManager.playerStat.bulletsPerShot;
-            animPlayed = false;
+            if (currentHealth > maxHealth)
+                currentHealth = maxHealth;
         }
+        else if (prevMax < maxHealth) 
+        {
+            currentHealth = maxHealth;
+        }
+    }
+
+    bulletPerShot = GameManager.Instance.statManager.playerStat.bulletsPerShot;
+    animPlayed = false;
+}
+
 
         float PlayerAttackInterval(float attackSpeed)
         {
