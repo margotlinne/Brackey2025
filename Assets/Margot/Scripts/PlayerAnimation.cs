@@ -21,7 +21,12 @@ namespace Margot
 
         void Update()
         {
-            if (GameManager.Instance.uiManager.isCanvasOn) return;
+            if (GameManager.Instance.uiManager.isCanvasOn)
+            {
+                anim.speed = 0f;
+                return;
+            }
+            anim.speed = 1f;
 
             Vector2 move = movement.moveInput;
 

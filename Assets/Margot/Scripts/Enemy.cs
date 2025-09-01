@@ -113,6 +113,7 @@ namespace Margot
             enemyStat = GameManager.Instance.statManager.enemyStat;
             moveSpeed = enemyStat.moveSpeed;
             maxHealth = enemyStat.maxHealth;
+            currentHealth = maxHealth;
             attackDamage = enemyStat.attackDamage;
             attackSpeed = EnemyAttackInterval(enemyStat.attackSpeedSPS);
         }

@@ -50,7 +50,9 @@ namespace Margot
             moveSpeed = GameManager.Instance.statManager.playerStat.moveSpeed;
             attackSpeedSPS = PlayerAttackInterval(GameManager.Instance.statManager.playerStat.attackSpeedSPS);
             attackDamage = GameManager.Instance.statManager.playerStat.attackDamage;
+            float healthGap = maxHealth - currentHealth;
             maxHealth = GameManager.Instance.statManager.playerStat.maxHealth;
+            currentHealth = maxHealth - healthGap;
             bulletPerShot = GameManager.Instance.statManager.playerStat.bulletsPerShot;
         }
 

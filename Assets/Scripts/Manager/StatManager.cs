@@ -104,6 +104,8 @@ namespace Margot
                     playerStat.maxHealth = value;
                     break;
             }
+            player.UpdateStat();
+
         }
     }
 }
