@@ -217,11 +217,15 @@ namespace Margot
         private void RecalculateRewards()
         {
             int negative = 0;
+            int positive = 0;
 
             foreach (var b in blocksInWheel)
             {
-                if (b.gameObject.activeSelf && !b.isPositive)
-                    negative++;
+                if (b.gameObject.activeSelf)
+                {
+                    if (b.isPositive) positive++;
+                    else negative++;
+                }
             }
 
             foreach (var b in blocksInWheel)
@@ -230,14 +234,18 @@ namespace Margot
                 {
                     int value;
 
+                    int effectiveNeg = Mathf.Max(0, negative - 1);
+                    if (positive > 0)
+                        effectiveNeg = Mathf.Max(0, (negative - 1) / positive);
+
                     if (b.increaseStat)
-                        value = b.baseRewardValue + Mathf.Max(0, negative - 1);
+                        value = b.baseRewardValue + effectiveNeg;
                     else
-                        value = Mathf.Max(1, b.baseRewardValue - Mathf.Max(0, negative - 1));
+                        value = Mathf.Max(1, b.baseRewardValue - effectiveNeg);
 
                     b.rewardValue = value;
 
-                    Debug.Log($"[RecalculateRewards] code={b.code}, base={b.baseRewardValue}, neg={negative}, reward={value}");
+                    Debug.Log($"[RecalculateRewards] code={b.code}, base={b.baseRewardValue}, neg={negative}, pos={positive}, reward={value}");
                 }
             }
         }
