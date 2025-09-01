@@ -23,6 +23,7 @@ namespace Margot
         public Color posColour;
         public Color negColour;
         [HideInInspector] public Sprite sr;
+        Sprite orgSprite;
         Image thisImage;
         public Button thisButton;
 
@@ -30,12 +31,14 @@ namespace Margot
         {
             thisImage = GetComponent<Image>();
             sr = iconImage.sprite;
+            orgSprite = sr;
             if (GetComponentInChildren<TextMeshProUGUI>() != null)
                 valueText = GetComponentInChildren<TextMeshProUGUI>();
         }
 
         void Start()
         {
+            
             InitValue();
         }
 
@@ -100,6 +103,8 @@ namespace Margot
             notAvailable = false;
             isSelected = false;
             isDeathBlock = false;
+            sr = orgSprite;
+            iconImage.sprite = sr;
             if (!thisButton.gameObject.activeSelf) thisButton.gameObject.SetActive(true);
         }
 

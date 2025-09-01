@@ -6,7 +6,7 @@ namespace Margot
     public class Bullet : SoundPlayer
     {
         protected Rigidbody2D rb;
-        
+        public string particleName = "";
 
         protected virtual void Awake()
         {
@@ -32,7 +32,7 @@ namespace Margot
 
         protected virtual void ReturnBullet()
         {
-            GameObject bulletParticle = GameManager.Instance.poolManager.TakeFromPool("BulletParticle");
+            GameObject bulletParticle = GameManager.Instance.poolManager.TakeFromPool(particleName);
             bulletParticle.SetActive(true);
             bulletParticle.transform.position = this.transform.position;
         }

@@ -141,3 +141,4 @@ MonoBehaviour:
   sounds:
   - {fileID: 8300000, guid: a47eaaf0cfbb6f044b3f18d91584f36b, type: 3}
   randSound: []
+  particleName: BloodParticle

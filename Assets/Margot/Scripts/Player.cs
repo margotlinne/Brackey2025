@@ -22,7 +22,9 @@ namespace Margot
         public int? bulletPerShot;
         Coroutine detectAttackedCoroutine = null;
 
-        // [Header("Health")]
+        [Header("Health")]
+        public Animation lowHealthUIAnim;
+        bool animPlayed = false;
 
 
         private void Awake()
@@ -32,6 +34,7 @@ namespace Margot
 
         private void Start()
         {
+            lowHealthUIAnim.gameObject.SetActive(false);
             maxHealth = GameManager.Instance.statManager.playerStat.maxHealth;
             currentHealth = maxHealth;
         }
@@ -41,19 +44,44 @@ namespace Margot
             cantMove = GameManager.Instance.uiManager.isCanvasOn;
 
             if (GameManager.Instance.isGameOver) Dead();
+
+            if (currentHealth == 1)
+            {
+                if (!animPlayed)
+                {
+                    lowHealthUIAnim.gameObject.SetActive(true);
+                    lowHealthUIAnim.Play();
+                    animPlayed = true;
+                }
+            }
+            else
+            {
+                lowHealthUIAnim.gameObject.SetActive(false);
+            }
         }
 
-        public void UpdateStat()
+        public void UpdateStat(bool updateCurrentHealth)
         {
             Debug.Log("[Player] Update player stat");
 
             moveSpeed = GameManager.Instance.statManager.playerStat.moveSpeed;
             attackSpeedSPS = PlayerAttackInterval(GameManager.Instance.statManager.playerStat.attackSpeedSPS);
             attackDamage = GameManager.Instance.statManager.playerStat.attackDamage;
-            float healthGap = maxHealth - currentHealth;
+            float prevMax = maxHealth;
             maxHealth = GameManager.Instance.statManager.playerStat.maxHealth;
-            currentHealth = maxHealth - healthGap;
+            if (updateCurrentHealth)
+            {
+                if (prevMax > maxHealth)
+                {
+                    float healthGap = prevMax - currentHealth;
+                    currentHealth = maxHealth - healthGap;
+                }
+                else currentHealth = maxHealth;
+            }
+
+
             bulletPerShot = GameManager.Instance.statManager.playerStat.bulletsPerShot;
+            animPlayed = false;
         }
 
         float PlayerAttackInterval(float attackSpeed)

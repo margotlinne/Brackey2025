@@ -119,8 +119,16 @@ PrefabInstance:
       value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 5268477127779947386, guid: 1199773e0b6d8446d81480c6a876157a, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5268477127779947386, guid: 1199773e0b6d8446d81480c6a876157a, type: 3}
       propertyPath: m_GravityScale
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5268477127779947386, guid: 1199773e0b6d8446d81480c6a876157a, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 6682142086067844703, guid: 1199773e0b6d8446d81480c6a876157a, type: 3}
       propertyPath: m_Sprite

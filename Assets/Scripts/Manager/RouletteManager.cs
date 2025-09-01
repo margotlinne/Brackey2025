@@ -64,7 +64,8 @@ namespace Margot
                 if (i == wheelBlockCount - 1)
                 {
                     block.iconImage.sprite = rouletteBlock.sr;
-                    block.baseRewardValue = block.rewardValue  = rouletteBlock.rewardValue;
+                    block.baseRewardValue =  rouletteBlock.rewardValue;
+                    block.rewardValue = rouletteBlock.rewardValue;
                     block.type = rouletteBlock.type;
                     block.isDeathBlock = rouletteBlock.isDeathBlock;
                     block.increaseStat = rouletteBlock.increaseStat;
@@ -82,56 +83,7 @@ namespace Margot
                 rotateAmount -= 360f * fill;
             }
 
-            int positive = 0;
-            int negative = 0;
-
-            foreach (var block in blocksInWheel)
-            {
-                if (block.gameObject.activeSelf)
-                {
-                    if (block.isPositive) positive++;
-                    else negative++;
-                }
-            }
-
-            float positiveRatio = (wheelBlockCount > 0) ? (float)positive / wheelBlockCount : 0f;
-
-            if (positiveRatio < 0.5f)
-            {
-                foreach (var block in blocksInWheel)
-                {
-                    if (block.isPositive && block.gameObject.activeSelf)
-                    {
-                        if (block.increaseStat)
-                        {
-                            block.rewardValue += negative;
-                            block.rewardValue = Mathf.Max(block.baseRewardValue, block.rewardValue - (positive - 1));
-                        }
-                        else
-                        {
-                            block.rewardValue = Mathf.Max(1, block.baseRewardValue - 1);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                foreach (var block in blocksInWheel)
-                {
-                    if (block.isPositive && block.gameObject.activeSelf)
-                    {
-                        if (block.increaseStat)
-                        {
-                            block.rewardValue = block.baseRewardValue;
-                        }
-                        else
-                        {
-                            block.rewardValue = Mathf.Max(1, block.baseRewardValue - 1);
-                        }
-                    }
-                }
-            }
-
+            RecalculateRewards();
 
         }
 
@@ -202,7 +154,7 @@ namespace Margot
                 {
                     Debug.Log("[RouletteManager] Return " + rouletteBlock.code + " block");
                     block.isSelected = false;
-                    return;
+                    break;
                 }
             }
 
@@ -222,47 +174,17 @@ namespace Margot
                     rotateAmount -= 360f * fill;
                 }
 
-                int positive = 0;
-                int negative = 0;
-
-                foreach (var b in blocksInWheel)
-                {
-                    if (b.gameObject.activeSelf)
-                    {
-                        if (b.isPositive) positive++;
-                        else negative++;
-                    }
-                }
-
-                float positiveRatio = (wheelBlockCount > 0) ? (float)positive / wheelBlockCount : 0f;
-
-                if (positiveRatio < 0.5f)
-                {
-                    foreach (var b in blocksInWheel)
-                    {
-                        if (b.isPositive && b.gameObject.activeSelf)
-                        {
-                            b.rewardValue = b.baseRewardValue; 
-                            b.rewardValue += negative;
-                            b.rewardValue = Mathf.Max(b.baseRewardValue, b.rewardValue - (positive - 1));
-                        }
-                    }
-                }
-                else
-                { 
-                    foreach (var b in blocksInWheel)
-                    {
-                        if (b.isPositive && b.gameObject.activeSelf)
-                            b.rewardValue = b.baseRewardValue;
-                    }
-                }
+            
             }
+
+            RecalculateRewards();
 
         }
 
         public void SpinRouletteButton()
         {
             PlaySound(3);
+
             if (wheelBlockCount > 1)
             {
                 int positiveCount = 0;
@@ -289,6 +211,41 @@ namespace Margot
                 }
             }
         }
+        private void RecalculateRewards()
+        {
+            int positive = 0;
+            int negative = 0;
+
+            foreach (var b in blocksInWheel)
+            {
+                if (b.gameObject.activeSelf)
+                {
+                    if (b.isPositive) positive++;
+                    else negative++;
+                }
+            }
+
+            foreach (var b in blocksInWheel)
+            {
+                if (b.isPositive && b.gameObject.activeSelf)
+                {
+                    int value = b.baseRewardValue;
+
+                    if (b.increaseStat)
+                    {
+                        value = b.baseRewardValue + Mathf.Max(0, negative - 1);
+                    }
+                    else
+                    {
+                        value = Mathf.Max(1, b.baseRewardValue - Mathf.Max(0, negative - 1));
+                    }
+
+                    b.rewardValue = value;
+                    Debug.Log($"[RecalculateRewards] code={b.code}, base={b.baseRewardValue}, neg={negative}, reward={value}");
+                }
+            }
+        }
+
 
 
 
