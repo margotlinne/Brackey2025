@@ -74,10 +74,13 @@ namespace Margot
             {
                 if (prevMax > maxHealth)
                 {
-                    float healthGap = prevMax - currentHealth;
-                    currentHealth = maxHealth - healthGap;
+                    if (currentHealth > maxHealth)
+                        currentHealth = maxHealth;
                 }
-                else currentHealth = maxHealth;
+                else 
+                {
+                    currentHealth = maxHealth;
+                }
             }
 
 

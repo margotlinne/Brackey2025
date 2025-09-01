@@ -33,7 +33,7 @@ namespace Margot
             //playerStat.attackSpeedSPS = 0.5f;
             //// playerStat.bulletsPerShot = 1;
 
-            player.UpdateStat(true);
+            player.UpdateStat(true); // init
             GameManager.Instance.uiManager.UpdateStatUIText();
         }
 
@@ -93,19 +93,19 @@ namespace Margot
                     break;
                 case StatType.p_attackDamage:
                     playerStat.attackDamage = value;
-                    player.UpdateStat(false);
+                    player.UpdateStat(false); // player attack damage
                     break;
                 case StatType.p_attackSpeed:
                     playerStat.attackSpeedSPS = value;
-                    player.UpdateStat(false);
+                    player.UpdateStat(false); // player attack speed 
                     break;
                 case StatType.p_moveSpeed:
                     playerStat.moveSpeed = value;
-                    player.UpdateStat(false);
+                    player.UpdateStat(false); // player move speed
                     break;
                 case StatType.p_health:
                     playerStat.maxHealth = value;
-                    player.UpdateStat(true);
+                    player.UpdateStat(true); // player max health
                     break;
             }
 
