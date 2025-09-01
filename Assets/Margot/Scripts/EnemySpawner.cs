@@ -57,8 +57,12 @@ namespace Margot
             // Activate first (so OnEnable runs), then set transform.
             enemy.SetActive(true);
 
-            var pos = spawnArea != null ? (Vector3)RandomPointIn(spawnArea) : Vector3.zero;
+            //var pos = spawnArea != null ? (Vector3)RandomPointIn(spawnArea) : Vector3.zero;
+            //enemy.transform.SetPositionAndRotation(pos, Quaternion.identity);
+
+            var pos = GetSafeSpawnPosition(spawnArea, enemy);
             enemy.transform.SetPositionAndRotation(pos, Quaternion.identity);
+
 
             var e = enemy.GetComponent<Enemy>();
             if (e != null)
@@ -76,6 +80,31 @@ namespace Margot
             PlaySound(1);
             return enemy;
         }
+
+        private Vector3 GetSafeSpawnPosition(BoxCollider2D area, GameObject enemyPrefab)
+        {
+            int maxAttempts = 20; 
+            Bounds bounds = enemyPrefab.GetComponent<Collider2D>().bounds;
+            Vector2 size = bounds.size;
+
+            for (int i = 0; i < maxAttempts; i++)
+            {
+                Vector3 candidate = RandomPointIn(area);
+
+                candidate.y += size.y * 0.5f;
+
+                Collider2D hit = Physics2D.OverlapBox(candidate, size, 0f, LayerMask.GetMask("Wall"));
+                if (hit == null)
+                {
+                    Debug.Log("[EnemySpawner] not colliding with walls");
+                    return candidate;
+                }
+            }
+
+            Debug.LogWarning("[EnemySpawner] Could not find safe spawn position, fallback to area center.");
+            return area.bounds.center;
+        }
+
 
         public void RemovedEnemyFromSpawnList(GameObject enemy)
         {
