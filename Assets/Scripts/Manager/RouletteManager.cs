@@ -336,6 +336,7 @@ namespace Margot
             yield return new WaitForSeconds(3f);
             if (selectedBlock.isDeathBlock)
             {
+                GameManager.Instance.player.Dead();
                 GameManager.Instance.uiManager.OpenCanvas(UIManager.CanvasType.gameover);
             }
             else GameManager.Instance.waveManager.NewWave();

@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public RouletteManager rouletteManager;
     public AudioManager audioManager;
 
-
+    public Player player;
     public bool isGameOver = false;
     public WorldShaking shaking;
     public int enemyKillCount = 0;

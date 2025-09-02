@@ -168,19 +168,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3386709711115225856, guid: 0501c92d614434ee38a3aa99774b74aa, type: 3}
       propertyPath: m_Size.x
-      value: 0.6
+      value: 0.45420277
       objectReference: {fileID: 0}
     - target: {fileID: 3386709711115225856, guid: 0501c92d614434ee38a3aa99774b74aa, type: 3}
       propertyPath: m_Size.y
-      value: 0.64
+      value: 0.46152422
       objectReference: {fileID: 0}
     - target: {fileID: 3386709711115225856, guid: 0501c92d614434ee38a3aa99774b74aa, type: 3}
       propertyPath: m_Offset.x
-      value: 0
+      value: 0.000000029802322
       objectReference: {fileID: 0}
     - target: {fileID: 3386709711115225856, guid: 0501c92d614434ee38a3aa99774b74aa, type: 3}
       propertyPath: m_Offset.y
-      value: 0
+      value: -0.0012568384
       objectReference: {fileID: 0}
     - target: {fileID: 3386709711115225856, guid: 0501c92d614434ee38a3aa99774b74aa, type: 3}
       propertyPath: m_IsTrigger

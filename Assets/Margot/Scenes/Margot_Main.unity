@@ -1286,15 +1286,15 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '- Put at least 2 blocks, cannot be all buff or debuff blocks.
+  m_text: '- Put 2-10 blocks. It cannot be all buff or debuff blocks.
 
 
-    -
-    Buff blocks cannot be more than half and there should be at least one.
+    - Buff
+    blocks cannot be more than half and there should be at least one.
 
 
-    -
-    If the debuff value falls below the minimum threshold, some blocks will be deactivated,
+    - If
+    the debuff value falls below the minimum threshold, some blocks will be deactivated,
     and others will turn into instant-death blocks.
 
 
@@ -3540,8 +3540,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3558,8 +3558,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4464,7 +4464,7 @@ MonoBehaviour:
   gameOverCanvas: {fileID: 1916341301}
   isCanvasOn: 0
   gameTimer: {fileID: 1677013569}
-  helpImage: {fileID: 2058888562}
+  helpImage: {fileID: 1403365251}
 --- !u!4 &349143802
 Transform:
   m_ObjectHideFlags: 0
@@ -7357,14 +7357,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.89019614, b: 0.5686275, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 847177359, guid: 428edccd3bd174443a7a0a56b50ef542, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f36ea8d45e43cb745bc5826bd66346e2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11178,9 +11178,9 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.10289094
+    x: 0.044581622
     y: 0
-    width: 0.7942181
+    width: 0.91083676
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -12657,6 +12657,7 @@ MonoBehaviour:
   resolutionManager: {fileID: 793685136}
   rouletteManager: {fileID: 382407798}
   audioManager: {fileID: 1557104263}
+  player: {fileID: 1165324709}
   isGameOver: 0
   shaking: {fileID: 1959439885}
   enemyKillCount: 0

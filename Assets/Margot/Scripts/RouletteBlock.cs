@@ -74,7 +74,7 @@ namespace Margot
 
                 if (currentVal - 1 <= 0)
                 {
-                    if (type == StatManager.StatType.p_health || type == StatManager.StatType.p_attackDamage)
+                    if (type == StatManager.StatType.p_health || type == StatManager.StatType.p_attackDamage || type == StatManager.StatType.p_attackSpeed)
                     {
                         isDeathBlock = true;
                         sr = deathIcon;
@@ -116,20 +116,21 @@ namespace Margot
                 return;
             }
 
+            EnableButton(isSelected);
+
+            if (valueText != null && GameManager.Instance.rouletteManager.isWheelSpinning)
+                thisButton.gameObject.SetActive(false);
+
             if (isDeathBlock)
             {
                 SetToDeathCard();
-                
                 return;
             }
 
-            EnableButton(isSelected);
 
             if (valueText != null)
             {
                 valueText.text = rewardValue.ToString();
-                if (GameManager.Instance.rouletteManager.isWheelSpinning)
-                    thisButton.gameObject.SetActive(false);
             }
 
             thisImage.color = isPositive ? posColour : negColour;
@@ -160,7 +161,7 @@ namespace Margot
 
         public void SetToDeathCard()
         {            
-            thisButton.interactable = true;
+            // thisButton.interactable = true;
             iconImage.sprite = deathIcon;
             thisImage.color = Color.red;
             if (valueText != null) valueText.text = "";
