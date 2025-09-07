@@ -32,7 +32,7 @@ namespace Margot
             thisImage = GetComponent<Image>();
             sr = iconImage.sprite;
             orgSprite = sr;
-            if (GetComponentInChildren<TextMeshProUGUI>() != null)
+            if (GetComponentInChildren<TextMeshProUGUI>() != null && GetComponentInChildren<TextMeshProUGUI>().gameObject.tag == "Value")
                 valueText = GetComponentInChildren<TextMeshProUGUI>();
         }
 

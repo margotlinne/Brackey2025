@@ -2,14 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Margot
 {
     public class RouletteManager : SoundPlayer
     {
-        public List<RouletteBlock> rouletteBlocks = new List<RouletteBlock>();
+        [Header("UI Items")]
         public GameObject spinButtonObj;
         public GameObject helpButtonObj;
+        public TextMeshProUGUI statusText;
+
+        [Header("Wheel")]
+        public List<RouletteBlock> rouletteBlocks = new List<RouletteBlock>();
         public Transform wheel;
         public Transform deckTransform;
         public RouletteBlock[] blocksInWheel;  // Slots in the wheel
@@ -20,6 +25,47 @@ namespace Margot
         void Start()
         {
             ResetWheel();
+        }
+
+        void Update()
+        {
+            if (isWheelSpinning)
+            {
+                spinButtonObj.SetActive(false);
+                return;
+            }
+
+            if (wheelBlockCount > 1)
+            {
+                int positiveCount = 0;
+
+                foreach (var block in blocksInWheel)
+                {
+                    if (block.gameObject.activeSelf && block.isPositive)
+                        positiveCount++;
+                }
+
+                if (positiveCount == 0) // all negative
+                {
+                    if (spinButtonObj.activeSelf) spinButtonObj.SetActive(false);
+                    statusText.text = "Too Many Negative Blocks";
+                }
+                else if (positiveCount <= wheelBlockCount / 2) // less than a half is positive
+                {
+                    if (!spinButtonObj.activeSelf) spinButtonObj.SetActive(true);
+                    statusText.text = "";
+                }
+                else 
+                {
+                    if (spinButtonObj.activeSelf) spinButtonObj.SetActive(false);
+                    statusText.text = "Too Many Positive Blocks";
+                }
+            }
+            else // no blocks
+            {
+                if (spinButtonObj.activeSelf) spinButtonObj.SetActive(false);
+                statusText.text = "Need At Least 2 Blocks";
+            }
         }
 
         /// <summary>
@@ -40,7 +86,7 @@ namespace Margot
         {
             deckTransform.gameObject.SetActive(true);
             helpButtonObj.SetActive(true);
-            spinButtonObj.SetActive(true);
+            // spinButtonObj.SetActive(true);
         }
 
         /// <summary>
@@ -184,36 +230,9 @@ namespace Margot
 
         }
 
-        public void SpinRouletteButton()
-        {
-            PlaySound(3);
+  
 
-            if (wheelBlockCount > 1)
-            {
-                int positiveCount = 0;
 
-                foreach (var block in blocksInWheel)
-                {
-                    if (block.gameObject.activeSelf && block.isPositive)
-                        positiveCount++;
-                }
-
-                if (positiveCount == 0)
-                {
-                    Debug.Log("[RouletteManager] Spin blocked: all blocks are negative.");
-                    return;
-                }
-
-                if (positiveCount <= wheelBlockCount / 2)
-                {
-                    StartCoroutine(SpinRoulette());
-                }
-                else
-                {
-                    Debug.Log("[RouletteManager] Spin blocked: too many positive blocks.");
-                }
-            }
-        }
         private void RecalculateRewards()
         {
             int negative = 0;
@@ -252,9 +271,39 @@ namespace Margot
 
 
 
+      public void SpinRouletteButton()
+        {
+            PlaySound(3);
+            StartCoroutine(SpinRoulette());
 
+            #region Commented Out -> Update method
+            //if (wheelBlockCount > 1)
+            //{
+            //    int positiveCount = 0;
 
+            //    foreach (var block in blocksInWheel)
+            //    {
+            //        if (block.gameObject.activeSelf && block.isPositive)
+            //            positiveCount++;
+            //    }
 
+            //    if (positiveCount == 0)
+            //    {
+            //        Debug.Log("[RouletteManager] Spin blocked: all blocks are negative.");
+            //        return;
+            //    }
+
+            //    if (positiveCount <= wheelBlockCount / 2)
+            //    {
+            //        StartCoroutine(SpinRoulette());
+            //    }
+            //    else
+            //    {
+            //        Debug.Log("[RouletteManager] Spin blocked: too many positive blocks.");
+            //    }
+            //}
+            #endregion
+        }
 
         IEnumerator SpinRoulette()
         {
@@ -332,7 +381,6 @@ namespace Margot
                 selectedBlock.SelectEffect();
             }
 
-            isWheelSpinning = false;
             yield return new WaitForSeconds(3f);
             if (selectedBlock.isDeathBlock)
             {
@@ -340,6 +388,7 @@ namespace Margot
                 GameManager.Instance.uiManager.OpenCanvas(UIManager.CanvasType.gameover);
             }
             else GameManager.Instance.waveManager.NewWave();
+            isWheelSpinning = false;
         }
 
 

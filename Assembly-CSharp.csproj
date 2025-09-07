@@ -80,6 +80,7 @@
     <Compile Include="Assets\Margot\Scripts\GameTimer.cs" />
     <Compile Include="Assets\Scripts\Manager\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
+    <Compile Include="Assets\Margot\Scripts\BlockHoverImage.cs" />
     <Compile Include="Assets\Margot\Scripts\BulletPool.cs" />
     <Compile Include="Assets\Margot\Scripts\WaveCountDown.cs" />
     <Compile Include="Assets\Margot\Scripts\MouseAim.cs" />
@@ -90,7 +91,6 @@
     <Compile Include="Assets\Kaisara\Scripts\EnemySpawner.cs" />
     <Compile Include="Assets\Margot\Scripts\PlayerAttack.cs" />
     <Compile Include="Assets\Scripts\Manager\UIManager.cs" />
-    <Compile Include="Assets\Margot\Scripts\HoverImage.cs" />
     <Compile Include="Assets\Margot\Scripts\PlayerAnimation.cs" />
     <Compile Include="Assets\Scripts\Manager\PoolManager.cs" />
     <Compile Include="Assets\Margot\Scripts\OrbitAimFollower.cs" />
