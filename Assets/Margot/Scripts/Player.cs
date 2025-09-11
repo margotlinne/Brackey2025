@@ -109,6 +109,8 @@ namespace Margot
         IEnumerator DetectAttacked(float damage)
         {
             Debug.Log("[Player] player got hit");
+            GameManager.Instance.shaking.Shake();
+
             currentHealth -= damage;
 
             // Play hit animation

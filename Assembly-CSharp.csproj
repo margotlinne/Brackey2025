@@ -79,8 +79,8 @@
     <Compile Include="Assets\Ryan\Scripts\ChasingEnemy.cs" />
     <Compile Include="Assets\Margot\Scripts\GameTimer.cs" />
     <Compile Include="Assets\Scripts\Manager\AudioManager.cs" />
-    <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
     <Compile Include="Assets\Margot\Scripts\BlockHoverImage.cs" />
+    <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
     <Compile Include="Assets\Margot\Scripts\BulletPool.cs" />
     <Compile Include="Assets\Margot\Scripts\WaveCountDown.cs" />
     <Compile Include="Assets\Margot\Scripts\MouseAim.cs" />
