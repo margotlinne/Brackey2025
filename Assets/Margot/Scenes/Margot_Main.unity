@@ -5379,8 +5379,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawner: {fileID: 1326045459}
-  startTotal: 12
-  totalGrowth: 1.2
+  startTotal: 6
+  totalGrowth: 1.5
   minBatch: 3
   maxBatch: 8
   batchEveryNWaves: 2
@@ -11304,10 +11304,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.17751938
-    y: 0
-    width: 0.64496124
-    height: 1
+    x: 0
+    y: 0.06501779
+    width: 1
+    height: 0.8699644
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34.9
